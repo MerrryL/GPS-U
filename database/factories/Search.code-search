@@ -1,0 +1,51 @@
+# Query: reffering
+# ContextLines: 1
+
+15 results - 4 files
+
+database\factories\ReferringFactory.php:
+   4  
+   5: use App\Models\Referring;
+   6  use Illuminate\Database\Eloquent\Factories\Factory;
+   7  
+   8: class ReferringFactory extends Factory
+   9  {
+
+  14       */
+  15:     protected $model = Referring::class;
+  16  
+
+database\migrations\2021_03_02_011342_create_Referrings_table.php:
+   6  
+   7: class CreateReferringsTable extends Migration
+   8  {
+
+  15      {
+  16:         Schema::create('Referrings', function (Blueprint $table) {
+  17              $table->id();
+
+  30      {
+  31:         Schema::dropIfExists('Referrings');
+  32      }
+
+database\seeders\ReferringSeeder.php:
+  6  
+  7: class ReferringSeeder extends Seeder
+  8  {
+
+vendor\composer\autoload_static.php:
+  525          'App\\Http\\Controllers\\ObserverController' => __DIR__ . '/../..' . '/app/Http/Controllers/ObserverController.php',
+  526:         'App\\Http\\Controllers\\ReferringController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReferringController.php',
+  527          'App\\Http\\Controllers\\RequestsController' => __DIR__ . '/../..' . '/app/Http/Controllers/RequestsController.php',
+
+  545          'App\\Models\\Observer' => __DIR__ . '/../..' . '/app/Models/Observer.php',
+  546:         'App\\Models\\Referring' => __DIR__ . '/../..' . '/app/Models/Referring.php',
+  547          'App\\Models\\Requests' => __DIR__ . '/../..' . '/app/Models/Requests.php',
+
+  663          'Database\\Factories\\ObserverFactory' => __DIR__ . '/../..' . '/database/factories/ObserverFactory.php',
+  664:         'Database\\Factories\\ReferringFactory' => __DIR__ . '/../..' . '/database/factories/ReferringFactory.php',
+  665          'Database\\Factories\\RequestsFactory' => __DIR__ . '/../..' . '/database/factories/RequestsFactory.php',
+
+  674          'Database\\Seeders\\ObserverSeeder' => __DIR__ . '/../..' . '/database/seeders/ObserverSeeder.php',
+  675:         'Database\\Seeders\\ReferringSeeder' => __DIR__ . '/../..' . '/database/seeders/ReferringSeeder.php',
+  676          'Database\\Seeders\\RequestsSeeder' => __DIR__ . '/../..' . '/database/seeders/RequestsSeeder.php',
