@@ -14,6 +14,6 @@ class ObservationDefaultRequestSeeder extends Seeder
      */
     public function run()
     {
-        ObservationDefaultRequest::factory()->count(10)->create();
+        //ObservationDefaultRequest::factory()->count(10)->create();
     }
 }

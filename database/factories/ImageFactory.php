@@ -5,6 +5,8 @@ namespace Database\Factories;
 use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use Faker\Generator as Faker;
+
 class ImageFactory extends Factory
 {
     /**
@@ -22,7 +24,7 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'image' => 'https://picsum.photos/200/300',
         ];
     }
 }

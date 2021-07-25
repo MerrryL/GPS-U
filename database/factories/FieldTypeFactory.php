@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\ObservationField;
+use App\Models\FieldType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ObservationFieldFactory extends Factory
+class FieldTypeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = ObservationField::class;
+    protected $model = FieldType::class;
 
     /**
      * Define the model's default state.
@@ -23,6 +23,7 @@ class ObservationFieldFactory extends Factory
     {
         return [
             'name'=> $this->faker->word,
+            'isDefault'=> $this->faker->boolean,
             'type'=> $this->faker->word
         ];
     }

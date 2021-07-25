@@ -14,8 +14,7 @@ class ConstatationController extends Controller
      */
     public function index()
     {
-        return Constatation::All()->toJson(JSON_PRETTY_PRINT);
-        return "I'm here";
+        return Constatation::with(['field_groups'/*, 'dossiers', 'actions', 'images', 'observers'*/])->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**

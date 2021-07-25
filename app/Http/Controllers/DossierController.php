@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Dossier;
 
 class DossierController extends Controller
 {
@@ -13,7 +14,7 @@ class DossierController extends Controller
      */
     public function index()
     {
-        //
+        return Dossier::All()->toJson();
     }
 
     /**

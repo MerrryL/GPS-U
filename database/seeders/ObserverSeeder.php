@@ -14,6 +14,6 @@ class ObserverSeeder extends Seeder
      */
     public function run()
     {
-        Observer::factory()->count(10)->create();
+        //Observer::factory()->count(10)->create();
     }
 }

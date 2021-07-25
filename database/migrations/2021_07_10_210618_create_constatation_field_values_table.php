@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateObservationFieldsTable extends Migration
+class CreateConstatationFieldValuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateObservationFieldsTable extends Migration
      */
     public function up()
     {
-        Schema::create('observation_fields', function (Blueprint $table) {
+        Schema::create('constatation_field_values', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('type');
+            $table->foreignId('field_group_id')->constrained();
+            $table->foreignId('field_type_id')->constrained();
+            $table->uuid('orderedUuid');
+            $table->text('value');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateObservationFieldsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('observation_fields');
+        Schema::dropIfExists('constatation_field_values');
     }
 }

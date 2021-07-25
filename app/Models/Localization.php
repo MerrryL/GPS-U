@@ -13,6 +13,6 @@ class Localization extends Model
 
     public function constatations()
     {
-        return $this->hasMany(Constatation::class);
+        return $this->belongsTo(Constatation::class);
     }
 }

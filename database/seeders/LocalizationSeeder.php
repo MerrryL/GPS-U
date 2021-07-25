@@ -14,6 +14,6 @@ class LocalizationSeeder extends Seeder
      */
     public function run()
     {
-        Localization::factory()->count(10)->create();
+        //Localization::factory()->count(10)->create();
     }
 }

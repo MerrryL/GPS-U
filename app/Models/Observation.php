@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Observation extends Model
 {
     use HasFactory;
+
+    public function constatations()
+    {
+        return $this->belongsToMany(Constatation::class);
+    }
 }

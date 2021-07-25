@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\FieldType;
 
-class ObservationField extends Controller
+class FieldTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class ObservationField extends Controller
      */
     public function index()
     {
-        //
+        return FieldType::all()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**

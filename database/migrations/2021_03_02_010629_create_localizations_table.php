@@ -17,6 +17,7 @@ class CreateLocalizationsTable extends Migration
             $table->id();
             $table->decimal('longitude', 10, 7);
             $table->decimal('latitude', 10, 7);
+            $table->foreignId('constatation_id')->constrained();
             $table->timestamps();
         });
     }

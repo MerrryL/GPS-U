@@ -14,6 +14,6 @@ class ReferringSeeder extends Seeder
      */
     public function run()
     {
-        Referring::factory()->count(10)->create();
+        //Referring::factory()->count(10)->create();
     }
 }

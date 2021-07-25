@@ -14,16 +14,23 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            
             ConstatationSeeder::class,
             DossierSeeder::class,
+            FieldGroupSeeder::class,
+            FieldTypeSeeder::class,
+            ConstatationFieldValueSeeder::class,
             ImageSeeder::class,
             LocalizationSeeder::class,
-            //ObservationDefaultRequestSeeder::class,
-            ObservationFieldSeeder::class,
+            ObservationDefaultRequestSeeder::class,
             ObservationSeeder::class,
             ObserverSeeder::class,
             ReferringSeeder::class,
-            RequestSeeder::class
+            RequestSeeder::class,
+            UserSeeder::class
+
+            /*ObservationFieldSeeder::class,
+            ConstatationSeeder::class,*/
         ]);
     }
 }
