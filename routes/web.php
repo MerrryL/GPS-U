@@ -29,8 +29,8 @@ Route::get('/', function () {
 });
 
 Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->middleware(['guest'])
-        ->name('login');
+    ->middleware(['guest'])
+    ->name('login');
 
 /*Route::get('/user', function () {
     return User::all()->toJson();

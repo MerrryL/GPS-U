@@ -2,10 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
-Use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoginController;
 
 //Use App\Http\Controllers\ConstatationController;
 /*Use App\Http\Controllers\ImageController;
@@ -52,51 +53,58 @@ Route::apiResources([
 ]);
 
 
-    // Authentication...
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->middleware(['guest'])
-        ->name('login');
+// Authentication...
 
-    $limiter = config('fortify.limiters.login');
+$limiter = config('fortify.limiters.login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store'])
-        ->middleware(array_filter([
-            'guest',
-            $limiter ? 'throttle:'.$limiter : null,
-        ]));
+// Route::post('/sanctum/token', function (Request $request) {
+//     $request->validate([
+//         'email' => 'required|email',
+//         'password' => 'required',
+//         'device_name' => 'required',
+//     ]);
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
+//     $user = User::where('email', $request->email)->first();
 
-Route::middleware('auth:sanctum')->group(function() {
-   
-    //Route::post('login', [LoginController::class, 'authenticate']);
+//     if (!$user || !Hash::check($request->password, $user->password)) {
+//         throw ValidationException::withMessages([
+//             'email' => ['The provided credentials are incorrect.'],
+//         ]);
+//     }
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
+//     return $user->createToken($request->device_name)->plainTextToken;
+// });
 
+Route::post('/sanctum/token', function (Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.'],
+        ]);
+    }
+
+    return $user->createToken($request->device_name)->plainTextToken;
 });
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:sanctum')->post('login', [LoginController::class, 'authenticate']);
+
+//TODO :
+// Route::middleware('auth:sanctum')->post('login', [LoginController::class, 'authenticate'])
+//     ->middleware(array_filter([
+//         'guest',
+//         $limiter ? 'throttle:' . $limiter : null,
+//     ]));
+
+Route::middleware('auth:sanctum')->group(function () {
 
 
-// Route::middleware('auth:sanctum')->group(function() {
-//     // Authentication...
-//     Route::get('login', [AuthenticatedSessionController::class, 'create'])
-//         ->middleware(['guest'])
-//         ->name('login');
-
-//     $limiter = config('fortify.limiters.login');
-
-//     Route::post('login', [AuthenticatedSessionController::class, 'store'])
-//         ->middleware(array_filter([
-//             'guest',
-//             $limiter ? 'throttle:'.$limiter : null,
-//         ]));
-
-//     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-//         ->name('logout');
-
-// });
+    Route::post('logout', [LoginController::class, 'logout'])
+        ->name('logout');
+});

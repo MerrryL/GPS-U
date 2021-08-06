@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Localization;
-use App\Models\Constatation;
+use App\Models\Adress;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class LocalizationFactory extends Factory
+class AdressFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Localization::class;
+    protected $model = Adress::class;
 
     /**
      * Define the model's default state.
@@ -23,10 +22,7 @@ class LocalizationFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'at_creation',
-            'constatation_id' => function () {
-                return Constatation::factory()->create()->id;
-            },
+            //
         ];
     }
 }

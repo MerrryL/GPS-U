@@ -15,12 +15,13 @@ class CreateLocalizationsTable extends Migration
     {
         Schema::create('localizations', function (Blueprint $table) {
             $table->id();
-            $table->decimal('longitude', 10, 7);
-            $table->decimal('latitude', 10, 7);
-            $table->foreignId('constatation_id')->constrained();
+            $table->string('name');
+            $table->foreignId('constatation_id')->nullable()->constrained();
             $table->timestamps();
         });
     }
+
+
 
     /**
      * Reverse the migrations.

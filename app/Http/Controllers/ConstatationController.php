@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Constatation;
+use App\Models\Localization;
+use App\Models\Coordinate;
+use App\Models\Address;
+use App\Models\AddressComponent;
+use App\Models\AddressComponentType;
+use App\Models\AddressGeometry;
+use App\Models\AddressGeometryLocation;
+use App\Models\AddressType;
 
 class ConstatationController extends Controller
 {
@@ -14,7 +22,7 @@ class ConstatationController extends Controller
      */
     public function index()
     {
-        return Constatation::with(['field_groups'/*, 'dossiers', 'actions', 'images', 'observers'*/])->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -35,7 +43,25 @@ class ConstatationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $localization = Localization::create(['name' => 'at_creation']);
+        if ($request->filled('location.coords')) {
+            $coordinate = new Coordinate($request->input('location.coords'));
+            $localization->coordinate()->save($coordinate);
+        }
+
+        if ($request->filled('location.address')) {
+            $address = $request->input('location.address');
+            $address['geometry'] = json_encode($address['geometry']);
+            $address = new Address($address);
+            $localization->address()->save($address);
+        }
+
+        $constat = Constatation::create();
+        $constat->localization()->save($localization);
+
+        return Constatation::where(['id' => $constat['id']])->with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->get();
+
+        //return Localization::where(['id' => $localization['id']])->with(['address', 'coordinate'])->get();
     }
 
     /**
