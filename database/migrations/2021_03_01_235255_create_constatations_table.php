@@ -18,6 +18,7 @@ class CreateConstatationsTable extends Migration
         Schema::create('constatations', function (Blueprint $table) {
             $table->id();
             $table->string('comment')->nullable();
+            $table->string('modelType')->nullable()->default(null);
             $table->boolean('isValidated')->default(false);
             $table->date('validationDate')->nullable();
             $table->boolean('requiresValidation')->default(false);

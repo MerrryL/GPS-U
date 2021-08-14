@@ -14,5 +14,9 @@
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14"
+    },
+    "dependencies": {
+        "expo-media-library": "^12.1.2",
+        "rn-fetch-blob": "^0.12.0"
     }
 }

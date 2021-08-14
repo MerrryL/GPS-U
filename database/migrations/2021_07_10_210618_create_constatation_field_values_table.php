@@ -15,7 +15,6 @@ class CreateConstatationFieldValuesTable extends Migration
     {
         Schema::create('constatation_field_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('field_group_id')->constrained();
             $table->foreignId('field_type_id')->constrained();
             $table->uuid('orderedUuid');
             $table->text('value');

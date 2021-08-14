@@ -50,6 +50,6 @@ class Constatation extends Model
 
     public function field_groups()
     {
-        return $this->hasMany(FieldGroup::class)->with('constatation_field_values');
+        return $this->hasMany(FieldGroup::class);
     }
 }

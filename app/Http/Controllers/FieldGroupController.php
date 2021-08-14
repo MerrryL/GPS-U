@@ -14,7 +14,7 @@ class FieldGroupController extends Controller
      */
     public function index()
     {
-        return FieldGroup::with('constatation_field_values')->get();
+        return FieldGroup::with('')->get();
     }
 
     /**

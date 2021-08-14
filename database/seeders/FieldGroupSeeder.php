@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Seeder;
@@ -14,7 +15,7 @@ class FieldGroupSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('field_groups')->insert([
+        /*DB::table('field_groups')->insert([
             [
                 'constatation_id' => "1",
                 'name' => '1er Groupe',
@@ -51,7 +52,7 @@ class FieldGroupSeeder extends Seeder
                 'type' => "text",
                 'logical_operator'=> 'OR',
             ],
-        ]
-    );
+        ]*/
+        //);
     }
 }

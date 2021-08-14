@@ -23,10 +23,7 @@ class LocalizationFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'at_creation',
-            'constatation_id' => function () {
-                return Constatation::factory()->create()->id;
-            },
+            'name' => 'at_creation'
         ];
     }
 }

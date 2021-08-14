@@ -9,13 +9,27 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "brianium/paratest": "^6.3",
+        "crazybooot/base64-validation": "^1.0",
+        "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/fortify": "^1.7",
         "laravel/framework": "^8.12",
         "laravel/sanctum": "^2.9",
-        "laravel/tinker": "^2.5"
+        "laravel/telescope": "^4.6",
+        "laravel/tinker": "^2.5",
+        "league/flysystem-cached-adapter": "^1.1",
+        "nyholm/psr7": "^1.4",
+        "pda/pheanstalk": "^4.0",
+        "predis/predis": "^1.1",
+        "pusher/pusher-php-server": "^7.0",
+        "spatie/geocoder": "^3.10",
+        "spatie/laravel-medialibrary": "9.0.0",
+        "symfony/cache": "^5.3",
+        "symfony/psr-http-message-bridge": "^2.1",
+        "wildbit/swiftmailer-postmark": "^3.3"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -23,7 +37,8 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "phpunit/phpunit": "^9.3.3",
+        "spatie/laravel-medialibrary": "9.0.0"
     },
     "config": {
         "optimize-autoloader": true,

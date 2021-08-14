@@ -10,8 +10,13 @@ class FieldType extends Model
 {
     use HasFactory;
 
-    public function field_groups()
+    public function constatation_field_value()
     {
-        return $this->hasOneOrMany(ConstatationFieldValue::class);
+        return $this->hasOne(ConstatationFieldValue::class);
+    }
+
+    public function field_group()
+    {
+        return $this->belongsTo(FieldGroup::class);
     }
 }

@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\FortifyServiceProvider::class,
+        Spatie\Geocoder\GeocoderServiceProvider::class
 
     ],
 
@@ -229,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
     ],
 
 ];

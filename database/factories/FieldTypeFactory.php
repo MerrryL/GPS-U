@@ -22,9 +22,9 @@ class FieldTypeFactory extends Factory
     public function definition()
     {
         return [
-            'name'=> $this->faker->word,
-            'isDefault'=> $this->faker->boolean,
-            'type'=> $this->faker->word
+            'name' => $this->faker->word,
+            'isDefault' => $this->faker->boolean,
+            'type' => $this->faker->word
         ];
     }
 }

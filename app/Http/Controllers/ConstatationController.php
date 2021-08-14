@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Constatation;
 use App\Models\Localization;
@@ -22,7 +23,7 @@ class ConstatationController extends Controller
      */
     public function index()
     {
-        return Constatation::with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::where(['modelType' => null])->with(['field_groups.field_types.constatation_field_value', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -30,6 +31,10 @@ class ConstatationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getModels()
+    {
+        return Constatation::where(['modelType' => 'model'])->with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+    }
     public function create()
     {
         //
@@ -49,9 +54,15 @@ class ConstatationController extends Controller
             $localization->coordinate()->save($coordinate);
         }
 
+        return $request->input('location');
+
         if ($request->filled('location.address')) {
             $address = $request->input('location.address');
-            $address['geometry'] = json_encode($address['geometry']);
+
+            if ($request->filled('location.address.geometry')) {
+                $address['geometry'] = json_encode($address['geometry']);
+            }
+
             $address = new Address($address);
             $localization->address()->save($address);
         }

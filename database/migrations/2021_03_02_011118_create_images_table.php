@@ -16,7 +16,7 @@ class CreateImagesTable extends Migration
         Schema::create('Images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('constatation_id')->constrained();
-            $table->string('image');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }

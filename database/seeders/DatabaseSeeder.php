@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,24 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            
-            ConstatationSeeder::class,
-            DossierSeeder::class,
-            FieldGroupSeeder::class,
-            FieldTypeSeeder::class,
-            ConstatationFieldValueSeeder::class,
-            ImageSeeder::class,
-            LocalizationSeeder::class,
-            ObservationDefaultRequestSeeder::class,
-            ObservationSeeder::class,
-            ObserverSeeder::class,
-            ReferringSeeder::class,
-            RequestSeeder::class,
-            UserSeeder::class
+        $files = Storage::disk('images')->directories();
+        foreach ($files as $file) {
+            Storage::disk('images')->deleteDirectory($file);
+        }
 
-            /*ObservationFieldSeeder::class,
-            ConstatationSeeder::class,*/
+        $this->call([
+            //FieldTypeSeeder::class,
+
+            ConstatationSeeder::class,
         ]);
     }
 }

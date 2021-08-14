@@ -15,37 +15,37 @@ class PivotTables extends Migration
     {
         Schema::create('constatation_dossier', function (Blueprint $table) {
             $table->id();
-            $table->integer('constatation_id');
-            $table->integer('dossier_id');
+            $table->foreignId('constatation_id')->constrained();
+            $table->foreignId('dossier_id')->constrained();
         });
 
         Schema::create('constatation_observation', function (Blueprint $table) {
             $table->id();
-            $table->integer('constatation_id');
-            $table->integer('observation_id');
+            $table->foreignId('constatation_id')->constrained();
+            $table->foreignId('observation_id')->constrained();
         });
 
         Schema::create('constatation_observer', function (Blueprint $table) {
             $table->id();
-            $table->integer('constatation_id');
-            $table->integer('observer_id');
+            $table->foreignId('constatation_id')->constrained();
+            $table->foreignId('observer_id')->constrained();
         });
         Schema::create('action_constatation', function (Blueprint $table) {
             $table->id();
-            $table->integer('action_id');
-            $table->integer('constatation_id');
+            $table->foreignId('action_id')->constrained();
+            $table->foreignId('constatation_id')->constrained();
         });
 
         Schema::create('observation_field_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('observation_id');
-            $table->integer('field_types_id');
+            $table->foreignId('observation_id')->constrained();
+            $table->foreignId('field_types_id')->constrained();
         });
 
         Schema::create('address_component_address_component_type', function (Blueprint $table) {
             $table->id();
-            $table->integer('address_component_id');
-            $table->integer('address_component_type_id');
+            $table->foreignId('address_component_id')->constrained();
+            $table->foreignId('address_component_type_id')->constrained();
         });
     }
 

@@ -15,13 +15,12 @@ class CreateFieldGroupsTable extends Migration
     {
         Schema::create('field_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('constatation_id')->constrained();
+            $table->foreignId('constatation_id')->nullable()->constrained();
             $table->string('name');
             $table->string('type');
             $table->string('logical_operator');
             $table->timestamps();
         });
-
     }
 
     /**

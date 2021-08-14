@@ -25,11 +25,26 @@ class ConstatationFactory extends Factory
     public function definition()
     {
         return [
-            'comment'=> $this->faker->text,
-            'isValidated'=> $this->faker->boolean,
-            'validationDate'=> $this->faker->dateTime($max = 'now', $timezone = null),
-            'requiresValidation'=> $this->faker->boolean,
-            'requiresValidationDate'=> $this->faker->dateTime($max = 'now', $timezone = null)
+            'comment' => $this->faker->text,
+            'modelType' => function () {
+                $number = $this->faker->numberBetween(0, 4);
+                switch ($number) {
+                    case 1:
+                        return 'model';
+                        break;
+
+                    case 2:
+                        return 'copy';
+                        break;
+                    default:
+                        return null;
+                        break;
+                }
+            },
+            'isValidated' => $this->faker->boolean,
+            'validationDate' => $this->faker->dateTime($max = 'now', $timezone = null),
+            'requiresValidation' => $this->faker->boolean,
+            'requiresValidationDate' => $this->faker->dateTime($max = 'now', $timezone = null)
         ];
     }
 }

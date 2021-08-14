@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConstatationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -7,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 
 use App\Http\Controllers\LoginController;
+use Spatie\Geocoder\Geocoder;
 
 //Use App\Http\Controllers\ConstatationController;
 /*Use App\Http\Controllers\ImageController;
@@ -52,28 +54,7 @@ Route::apiResources([
     'requests' => 'RequestController'
 ]);
 
-
-// Authentication...
-
-$limiter = config('fortify.limiters.login');
-
-// Route::post('/sanctum/token', function (Request $request) {
-//     $request->validate([
-//         'email' => 'required|email',
-//         'password' => 'required',
-//         'device_name' => 'required',
-//     ]);
-
-//     $user = User::where('email', $request->email)->first();
-
-//     if (!$user || !Hash::check($request->password, $user->password)) {
-//         throw ValidationException::withMessages([
-//             'email' => ['The provided credentials are incorrect.'],
-//         ]);
-//     }
-
-//     return $user->createToken($request->device_name)->plainTextToken;
-// });
+Route::get('/options', [ConstatationController::class, 'getModels']);
 
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
@@ -95,14 +76,28 @@ Route::post('/sanctum/token', function (Request $request) {
 
 Route::middleware('auth:sanctum')->post('login', [LoginController::class, 'authenticate']);
 
-//TODO :
-// Route::middleware('auth:sanctum')->post('login', [LoginController::class, 'authenticate'])
-//     ->middleware(array_filter([
-//         'guest',
-//         $limiter ? 'throttle:' . $limiter : null,
-//     ]));
+Route::post('AdressFromCoordinates', function (Request $request) {
+    $request->validate([
+        'lat' => 'required',
+        'lng' => 'required'
+    ]);
+
+    $client = new \GuzzleHttp\Client([
+        'verify' => base_path('cacert.pem'),
+    ]);
+
+    $geocoder = new Geocoder($client);
+    $geocoder->setApiKey(config('geocoder.key'));
+    $geocoder->setLanguage(config('geocoder.language'));
+    $geocoder->setRegion(config('geocoder.region'));
+    $geocoder->setBounds(config('geocoder.bounds'));
+
+    return $geocoder->getAddressForCoordinates($request['lat'], $request['lng']);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
+
+
 
 
     Route::post('logout', [LoginController::class, 'logout'])

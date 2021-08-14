@@ -9,8 +9,12 @@ class FieldGroup extends Model
 {
     use HasFactory;
 
-    public function constatation_field_values()
+    public function constatation()
     {
-        return $this->hasMany(ConstatationFieldValue::class)->with('field_type');
+        return $this->belongsTo(Constatation::class);
+    }
+    public function field_types()
+    {
+        return $this->hasMany(FieldType::class);
     }
 }

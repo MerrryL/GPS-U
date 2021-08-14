@@ -11,11 +11,6 @@ class ConstatationFieldValue extends Model
 {
     use HasFactory;
 
-    public function constatation()
-    {
-        return $this->hasOneOrMany(Constatation::class);
-    }
-
     public function field_type()
     {
         return $this->belongsTo(FieldType::class);

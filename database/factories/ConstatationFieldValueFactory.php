@@ -22,10 +22,8 @@ class ConstatationFieldValueFactory extends Factory
     public function definition()
     {
         return [
-            'field_type_id' => function() {
-                return rand(0,6);
-            },
-            'value'=> $this->faker->text()
+            'value' => $this->faker->text(),
+            'orderedUUID' => $this->faker->uuid()
         ];
     }
 }

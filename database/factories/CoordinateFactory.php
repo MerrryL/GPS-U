@@ -23,13 +23,8 @@ class CoordinateFactory extends Factory
     public function definition()
     {
         return [
-            return [
-                'longitude'=> $this->faker->longitude($min = 50.49, $max = 50.53),
-                'latitude'=> $this->faker->latitude($min = 3.57, $max = 3.59),
-                'localization_id' => function() {
-                    return Localization::factory()->create()->id;
-                },
-            ];
+            'longitude' => $this->faker->longitude($min = 50.49, $max = 50.53),
+            'latitude' => $this->faker->latitude($min = 3.57, $max = 3.59),
         ];
     }
 }

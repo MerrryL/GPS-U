@@ -22,7 +22,9 @@ class FieldGroupFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->word,
+            'type' => $this->faker->word,
+            'logical_operator' => $this->faker->word,
         ];
     }
 }
