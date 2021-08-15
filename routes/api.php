@@ -74,7 +74,7 @@ Route::post('/sanctum/token', function (Request $request) {
     return $user->createToken($request->device_name)->plainTextToken;
 });
 
-Route::middleware('auth:sanctum')->post('login', [LoginController::class, 'authenticate']);
+Route::post('login', [LoginController::class, 'authenticate']);
 
 Route::post('AdressFromCoordinates', function (Request $request) {
     $request->validate([
@@ -102,4 +102,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('logout', [LoginController::class, 'logout'])
         ->name('logout');
+});
+
+Route::get('me', function () {
+    return User::where(['id' => '1'])->first();
 });

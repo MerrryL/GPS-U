@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             //FieldTypeSeeder::class,
-
+            UserSeeder::class,
             ConstatationSeeder::class,
         ]);
     }

@@ -26,7 +26,9 @@ class LoginController extends Controller
             ]);
         }
 
-        return $user;
+        $token = $user->createToken($request->token_name);
+
+        return ['data' => ['token' => $token->plainTextToken, 'user' => $user]];
     }
 
     public function logout(Request $request)
