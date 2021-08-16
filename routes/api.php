@@ -10,22 +10,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\LoginController;
 use Spatie\Geocoder\Geocoder;
 
-//Use App\Http\Controllers\ConstatationController;
-/*Use App\Http\Controllers\ImageController;
-Use App\Http\Controllers\LocalizationController;
-Use App\Http\Controllers\ObservationController;
-Use App\Http\Controllers\ObservationDefaultRequestsController;
-
-Use App\Http\Controllers\ObserverController;
-Use App\Http\Controllers\RequestController;*/
-
-
-
-/*header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
-header('Access-Control-Allow-Origin: *');*/
-
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,8 +20,6 @@ header('Access-Control-Allow-Origin: *');*/
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
 
 
 Route::apiResources([
@@ -61,7 +43,6 @@ Route::post('/sanctum/token', function (Request $request) {
         'email' => 'required|email',
         'password' => 'required'
     ]);
-
 
     $user = User::where('email', $request->email)->first();
 
@@ -96,10 +77,6 @@ Route::post('AdressFromCoordinates', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-
-
-
-
     Route::post('logout', [LoginController::class, 'logout'])
         ->name('logout');
 });

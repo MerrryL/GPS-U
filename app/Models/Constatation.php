@@ -18,6 +18,8 @@ class Constatation extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['comment'];
+
     public function dossiers()
     {
         return $this->belongsToMany(Dossier::class);

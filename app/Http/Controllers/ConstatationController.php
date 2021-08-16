@@ -54,7 +54,7 @@ class ConstatationController extends Controller
             $localization->coordinate()->save($coordinate);
         }
 
-        return $request->input('location');
+        //return $request->input('location');
 
         if ($request->filled('location.address')) {
             $address = $request->input('location.address');
@@ -83,7 +83,7 @@ class ConstatationController extends Controller
      */
     public function show($id)
     {
-        //
+        return Constatation::where(['id' => $id])->with(['field_groups.field_types.constatation_field_value', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->first()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -106,7 +106,14 @@ class ConstatationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'comment' => 'required',
+        ]);
+        
+        $constatation = Constatation::find($id);
+        $constatation->update($request->all());
+        
+        return $constatation;
     }
 
     /**

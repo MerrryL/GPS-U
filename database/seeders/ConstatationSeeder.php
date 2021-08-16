@@ -30,7 +30,7 @@ class ConstatationSeeder extends Seeder
      */
     public function run()
     {
-        Constatation::factory()->count(10)
+        Constatation::factory()->count(100)
             ->create()
             ->each(function ($constatation) {
                 $localization = Localization::factory()->make();
@@ -43,24 +43,24 @@ class ConstatationSeeder extends Seeder
                     'verify' => base_path('cacert.pem'),
                 ]);
 
-                $geocoder = new Geocoder($client);
-                $geocoder->setApiKey(config('geocoder.key'));
-                $geocoder->setLanguage(config('geocoder.language'));
-                $geocoder->setRegion(config('geocoder.region'));
-                $geocoder->setBounds(config('geocoder.bounds'));
+                // $geocoder = new Geocoder($client);
+                // $geocoder->setApiKey(config('geocoder.key'));
+                // $geocoder->setLanguage(config('geocoder.language'));
+                // $geocoder->setRegion(config('geocoder.region'));
+                // $geocoder->setBounds(config('geocoder.bounds'));
 
-                $address = $geocoder->getAddressForCoordinates($coords['latitude'], $coords['longitude']);
-
-
-                $address = new Address([
-                    'formatted_address' => $address['formatted_address'],
-                    'place_id' => $address['place_id'],
+                // $address = $geocoder->getAddressForCoordinates($coords['latitude'], $coords['longitude']);
 
 
-                ]);
-                Log::info($address);
+                // $address = new Address([
+                //     'formatted_address' => $address['formatted_address'],
+                //     'place_id' => $address['place_id'],
 
-                $localization->address()->save($address);
+
+                // ]);
+                // Log::info($address);
+
+                // $localization->address()->save($address);
 
 
 
