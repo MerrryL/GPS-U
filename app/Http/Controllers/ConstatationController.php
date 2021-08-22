@@ -33,7 +33,7 @@ class ConstatationController extends Controller
      */
     public function getModels()
     {
-        return Constatation::where(['modelType' => 'model'])->with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::where(['modelType' => 'model'])->with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
     public function create()
     {
@@ -70,7 +70,7 @@ class ConstatationController extends Controller
         $constat = Constatation::create();
         $constat->localization()->save($localization);
 
-        return Constatation::where(['id' => $constat['id']])->with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->get();
+        return Constatation::where(['id' => $constat['id']])->with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->first();
 
         //return Localization::where(['id' => $localization['id']])->with(['address', 'coordinate'])->get();
     }

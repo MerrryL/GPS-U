@@ -27,6 +27,7 @@
         "pusher/pusher-php-server": "^7.0",
         "spatie/geocoder": "^3.10",
         "spatie/laravel-medialibrary": "9.0.0",
+        "spatie/laravel-query-builder": "^3.5",
         "symfony/cache": "^5.3",
         "symfony/psr-http-message-bridge": "^2.1",
         "wildbit/swiftmailer-postmark": "^3.3"

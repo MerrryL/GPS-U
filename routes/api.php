@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ConstatationController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -35,6 +36,12 @@ Route::apiResources([
     'referrings' => 'ReferringController',
     'requests' => 'RequestController'
 ]);
+
+//Route::resource('constatations.images', 'ImageController');
+
+Route::post('/images/upload/{imageId}', [ImageController::class, 'storeImage']);
+
+Route::get('/constatations/{constatationId?}/images', [ImageController::class, 'getFromConst']);
 
 Route::get('/options', [ConstatationController::class, 'getModels']);
 

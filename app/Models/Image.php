@@ -20,6 +20,12 @@ class Image extends Model implements HasMedia
         return $this->belongsTo(Constatation::class);
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('image')
+            ->singleFile();
+    }
 
     public function registerMediaConversions(Media $media = null): void
     {

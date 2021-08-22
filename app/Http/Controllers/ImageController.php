@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
+use Spatie\QueryBuilder\QueryBuilder;
+
 class ImageController extends Controller
 {
     /**
@@ -16,9 +18,13 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Image::All()->toJson();
+        return QueryBuilder::for(Image::class)
+            ->allowedFilters('constatation_id')
+            ->with('media')
+            ->get()
+            ->toJson();
     }
 
     /**
@@ -26,9 +32,25 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getFromConst($constatationId)
     {
-        //
+        return Image::where(['constatation_id' => $constatationId])->with('media')->get();
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'constatationId' => 'required'
+        ]);
+
+        $image = new Image(['name' =>$request->input('name') ]);
+        
+        $constatation = Constatation::find($request->input('constatationId'));
+
+        $image = $constatation->images()->save($image);
+
+        return $image;
     }
 
     /**
@@ -37,51 +59,22 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeImage(Request $request, $id)
     {
-
-        // $encoded_image = $request->input()['image']['uri'];
-        // Storage::put('file.jpg', base64_decode($encoded_image));
-
-        //return $request->input()['image'];
         $request->validate([
             'image' => 'required',
-            'image.base64' => 'required|base64mimes:jpeg,png,jpg,gif,svg'
+            'image.base64' => 'required|base64mimes:jpeg,png,jpg,gif,svg',
         ]);
-
-        // $request->validate([
-        //     'image' => 'required| mimes:jpeg,png,jpg,gif,svg'
-        // ]);
-        //$code_base64 = str_replace('data:image/jpeg;base64,', '', $request->input()['image']);
-        //$code_binary = base64_decode($code_base64);
-
-        //return ['request', $request->input()['image']['base64']];
-
-
 
         $filename = md5(time()) . '.jpg';
         Storage::disk('images')->put($filename, base64_decode($request->input()['image']['base64']));
         $path = Storage::disk('images')->url($filename);
 
         //return $path;
-        $document = new Image(['name' => 'test', 'constatation_id' => 1]);
-        //$document->save();
-        $constatation = Constatation::where(['id' => 1])->first();
-
-        //return $document;
-        //return $constatation;
-        $constatation->images()->save($document);
-
-        $document->addMedia('images/' . $filename)->toMediaCollection();
-
-        //$document->getMedia();
-        //$document->images = $document->getMedia();
-        $mediaItems = $document->getMedia();
-        $publicUrl = $mediaItems[0]->getUrl();
-        return $publicFullUrl = $mediaItems[0]->getFullUrl();
-        return $document::with('media');
-        return $document->getMedia();
-        return $document->getPath();
+        $image = Image::find($id);
+        $image->addMedia('images/' . $filename)->toMediaCollection('image');
+        
+        return $image->load('media');
     }
 
     /**
@@ -92,7 +85,7 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        //
+        return Image::with(['media'])->find($id);
     }
 
     /**
