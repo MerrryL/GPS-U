@@ -36,10 +36,10 @@ class PivotTables extends Migration
             $table->foreignId('constatation_id')->constrained();
         });
 
-        Schema::create('observation_field_types', function (Blueprint $table) {
+        Schema::create('observation_fields', function (Blueprint $table) {
             $table->id();
             $table->foreignId('observation_id')->constrained();
-            $table->foreignId('field_types_id')->constrained();
+            $table->foreignId('fields_id')->constrained();
         });
 
         Schema::create('address_component_address_component_type', function (Blueprint $table) {

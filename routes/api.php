@@ -30,8 +30,8 @@ Route::apiResources([
     'localizations' => 'LocalizationController',
     'observations' => 'ObservationController',
     'observation-default-requests' => 'ObservationDefaultRequestsController',
-    'field_types' => 'FieldTypeController',
-    'field-groups' => 'FieldGroupController',
+    'fields' => 'FieldController',
+    'field_groups' => 'FieldGroupController',
     'observers' => 'ObserverController',
     'referrings' => 'ReferringController',
     'requests' => 'RequestController'

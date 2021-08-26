@@ -9,12 +9,14 @@ class FieldGroup extends Model
 {
     use HasFactory;
 
+    public $fillable = ['name', 'type', 'logical_operator'];
+
     public function constatation()
     {
         return $this->belongsTo(Constatation::class);
     }
-    public function field_types()
+    public function fields()
     {
-        return $this->hasMany(FieldType::class);
+        return $this->hasMany(Field::class);
     }
 }

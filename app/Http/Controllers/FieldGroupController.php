@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\FieldGroup;
+use App\Models\Constatation;
+
 use Illuminate\Http\Request;
+
+use Spatie\QueryBuilder\QueryBuilder;
+
 
 class FieldGroupController extends Controller
 {
@@ -14,7 +19,11 @@ class FieldGroupController extends Controller
      */
     public function index()
     {
-        return FieldGroup::with('')->get();
+        return QueryBuilder::for(FieldGroup::class)
+            ->allowedFilters('constatation_id')
+            ->with('fields')
+            ->get()
+            ->toJson();
     }
 
     /**
@@ -35,7 +44,21 @@ class FieldGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+            'logical_operator' => 'required',
+            'constatationId' => 'required'
+        ]);
+        $validated = $request->only(['name', 'type', 'logical_operator']);
+
+        $field_group = new FieldGroup($validated);
+
+        $constatation = Constatation::find($request->input('constatationId'));
+
+        $field_group = $constatation->field_groups()->save($field_group);
+
+        return $field_group;
     }
 
     /**

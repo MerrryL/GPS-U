@@ -14,8 +14,7 @@ use App\Models\Coordinate;
 use App\Models\Observation;
 use App\Models\Observer;
 use App\Models\FieldGroup;
-use App\Models\FieldType;
-use App\Models\ConstatationFieldValue;
+use App\Models\Field;
 use Illuminate\Database\Seeder;
 
 use Spatie\Geocoder\Geocoder;
@@ -30,7 +29,7 @@ class ConstatationSeeder extends Seeder
      */
     public function run()
     {
-        Constatation::factory()->count(100)
+        Constatation::factory()->count(3)
             ->create()
             ->each(function ($constatation) {
                 $localization = Localization::factory()->make();
@@ -75,20 +74,19 @@ class ConstatationSeeder extends Seeder
                 // Log::info($group);
                 // $constatation->field_groups()->save($group);
                 // Log::info($group);
-                $k = rand(1, 5);
+
+                // $constatation->field_groups()->saveMany(FieldGroup::factory()->count(3)->make());
+
+                $k = rand(2, 5);
                 for ($i = 0; $i < $k; $i++) {
 
                     $group = FieldGroup::factory()->make();
                     $constatation->field_groups()->save($group);
 
-                    $l = rand(1, 5);
+                    $l = rand(2, 5);
                     for ($j = 0; $j < $l; $j++) {
-                        $fieldType = FieldType::factory()->make();
-                        $group->field_types()->save($fieldType);
-
-
-                        $value = ConstatationFieldValue::factory()->make();
-                        $fieldType->constatation_field_value()->save($value);
+                        $field = Field::factory()->make();
+                        $group->fields()->save($field);
                     };
                 }
 
