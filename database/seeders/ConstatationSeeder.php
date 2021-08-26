@@ -37,7 +37,7 @@ class ConstatationSeeder extends Seeder
                 $constatation->localization()->save($localization);
 
                 $coords = Coordinate::factory()->make();
-                $localization->coordinate()->save($coords);
+                $localization->coords()->save($coords);
 
                 $client = new \GuzzleHttp\Client([
                     'verify' => base_path('cacert.pem'),
