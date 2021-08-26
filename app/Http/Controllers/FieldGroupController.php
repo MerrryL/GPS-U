@@ -103,6 +103,7 @@ class FieldGroupController extends Controller
      */
     public function destroy(FieldGroup $fieldGroup)
     {
-        //
+        $fieldGroup->fields()->delete();
+        return $fieldGroup->delete();
     }
 }
