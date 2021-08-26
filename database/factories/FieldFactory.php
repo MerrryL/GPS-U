@@ -26,7 +26,6 @@ class FieldFactory extends Factory
             'isDefault' => $this->faker->boolean,
             'type' => $this->faker->word,
             'value' => $this->faker->text(),
-            'orderedUUID' => $this->faker->uuid()
         ];
     }
 }

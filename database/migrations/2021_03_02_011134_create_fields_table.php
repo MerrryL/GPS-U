@@ -18,7 +18,6 @@ class CreateFieldsTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('value');
-            $table->string('orderedUUID');
             $table->boolean('isDefault');
             $table->foreignId('field_group_id')->constrained();
             $table->timestamps();

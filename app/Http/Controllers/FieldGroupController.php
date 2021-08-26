@@ -69,7 +69,7 @@ class FieldGroupController extends Controller
      */
     public function show(FieldGroup $fieldGroup)
     {
-        //
+        return $fieldGroup->load(['fields']);
     }
 
     /**

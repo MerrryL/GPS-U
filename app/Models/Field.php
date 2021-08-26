@@ -10,6 +10,8 @@ class Field extends Model
 {
     use HasFactory;
 
+    protected $fillable= ['name', 'type', 'value', 'isDefault'];
+
     public function field_group()
     {
         return $this->belongsTo(FieldGroup::class);

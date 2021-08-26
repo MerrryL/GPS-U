@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Field;
+use App\Models\FieldGroup;
+
+use Illuminate\Http\Request;
+
+use Spatie\QueryBuilder\QueryBuilder;
 
 class FieldController extends Controller
 {
@@ -14,7 +18,10 @@ class FieldController extends Controller
      */
     public function index()
     {
-        return Field::all()->toJson(JSON_PRETTY_PRINT);
+        return QueryBuilder::for(Field::class)
+        ->allowedFilters('field_group_id')
+        ->get()
+        ->toJson();
     }
 
     /**
@@ -35,7 +42,22 @@ class FieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+            'value' => 'required',
+            'isDefault' => 'required',
+            'constatationId' => 'required'
+        ]);
+        $validated = $request->only(['name', 'type', 'value', 'isDefault']);
+
+        $field = new Field($validated);
+
+        $field_group = FieldGroup::find($request->input('fieldGroupId'));
+
+        $field = $field_group->fields()->save($field);
+
+        return $field;
     }
 
     /**
@@ -46,7 +68,7 @@ class FieldController extends Controller
      */
     public function show($id)
     {
-        //
+        return Field::find($id);
     }
 
     /**
