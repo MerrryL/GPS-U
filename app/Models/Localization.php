@@ -18,7 +18,7 @@ class Localization extends Model
         return $this->hasOne(Constatation::class);
     }
 
-    public function coordinate()
+    public function coords()
     {
         return $this->hasOne(Coordinate::class);
     }

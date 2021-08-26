@@ -27,15 +27,18 @@ class ImageController extends Controller
             ->toJson();
     }
 
+    //TODO: do it later?
+    // public function getFromConst($constatationId)
+    // {
+    //     return Image::where(['constatation_id' => $constatationId])->with('media')->get();
+    // }
+    
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getFromConst($constatationId)
-    {
-        return Image::where(['constatation_id' => $constatationId])->with('media')->get();
-    }
+
 
     public function store(Request $request)
     {
@@ -119,6 +122,6 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Image::find($id)->delete();
     }
 }

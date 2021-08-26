@@ -41,7 +41,8 @@ Route::apiResources([
 
 Route::post('/images/upload/{imageId}', [ImageController::class, 'storeImage']);
 
-Route::get('/constatations/{constatationId?}/images', [ImageController::class, 'getFromConst']);
+// Route::get('/constatations/{constatationId?}/images', [ImageController::class, 'getFromConst']);
+// Route::get('/constatations/{constatationId?}/location', [LocalizationController::class, 'getFromConst']);
 
 Route::get('/options', [ConstatationController::class, 'getModels']);
 

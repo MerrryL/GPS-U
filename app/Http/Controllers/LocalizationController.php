@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Localization;
 
+use Spatie\QueryBuilder\QueryBuilder;
+
 class LocalizationController extends Controller
 {
     /**
@@ -14,7 +16,11 @@ class LocalizationController extends Controller
      */
     public function index()
     {
-        return Localization::all()->toJson();
+        return QueryBuilder::for(Localization::class)
+            ->allowedFilters('constatation_id')
+            ->with(['coords', 'address'])
+            ->firstOrFail()
+            ->toJson();
     }
 
     /**

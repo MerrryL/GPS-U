@@ -23,7 +23,7 @@ class ConstatationController extends Controller
      */
     public function index()
     {
-        return Constatation::where(['modelType' => null])->with(['field_groups.field_types.constatation_field_value', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::where(['modelType' => null])->with(['field_groups.field_types.constatation_field_value', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -33,7 +33,7 @@ class ConstatationController extends Controller
      */
     public function getModels()
     {
-        return Constatation::where(['modelType' => 'model'])->with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::where(['modelType' => 'model'])->with(['field_groups', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
     public function create()
     {
@@ -70,7 +70,7 @@ class ConstatationController extends Controller
         $constat = Constatation::create();
         $constat->localization()->save($localization);
 
-        return Constatation::where(['id' => $constat['id']])->with(['field_groups', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->first();
+        return Constatation::where(['id' => $constat['id']])->with(['field_groups', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->first();
 
         //return Localization::where(['id' => $localization['id']])->with(['address', 'coordinate'])->get();
     }
@@ -83,7 +83,7 @@ class ConstatationController extends Controller
      */
     public function show($id)
     {
-        return Constatation::where(['id' => $id])->with(['field_groups.field_types.constatation_field_value', 'localization.coordinate', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->first()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::where(['id' => $id])->with(['field_groups.field_types.constatation_field_value', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->first()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
