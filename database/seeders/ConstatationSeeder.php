@@ -29,53 +29,15 @@ class ConstatationSeeder extends Seeder
      */
     public function run()
     {
-        Constatation::factory()->count(3)
+        Constatation::factory()->count(30)
             ->create()
             ->each(function ($constatation) {
-                $localization = Localization::factory()->make();
-                $constatation->localization()->save($localization);
-
-                $coords = Coordinate::factory()->make();
-                $localization->coords()->save($coords);
-
-                $client = new \GuzzleHttp\Client([
-                    'verify' => base_path('cacert.pem'),
-                ]);
-
-                // $geocoder = new Geocoder($client);
-                // $geocoder->setApiKey(config('geocoder.key'));
-                // $geocoder->setLanguage(config('geocoder.language'));
-                // $geocoder->setRegion(config('geocoder.region'));
-                // $geocoder->setBounds(config('geocoder.bounds'));
-
-                // $address = $geocoder->getAddressForCoordinates($coords['latitude'], $coords['longitude']);
-
-
-                // $address = new Address([
-                //     'formatted_address' => $address['formatted_address'],
-                //     'place_id' => $address['place_id'],
-
-
-                // ]);
-                // Log::info($address);
-
-                // $localization->address()->save($address);
-
-
-
-
+                $constatation->localization()->save(Localization::factory()->make());
 
                 $constatation->dossiers()->saveMany(Dossier::factory()->count(1)->make());
                 $constatation->actions()->saveMany(Action::Factory()->count(2)->make());
                 $constatation->observers()->saveMany(Observer::factory()->count(2)->make());
                 $constatation->observations()->saveMany(Observation::Factory()->count(3)->make());
-
-                // $group = FieldGroup::factory()->make();
-                // Log::info($group);
-                // $constatation->field_groups()->save($group);
-                // Log::info($group);
-
-                // $constatation->field_groups()->saveMany(FieldGroup::factory()->count(3)->make());
 
                 $k = rand(2, 5);
                 for ($i = 0; $i < $k; $i++) {

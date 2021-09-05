@@ -23,7 +23,30 @@ class LocalizationFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'at_creation'
+            'given_name' => 'at_creation'
         ];
+
+                // $client = new \GuzzleHttp\Client([
+        //     'verify' => base_path('cacert.pem'),
+        // ]);
+
+        // $geocoder = new Geocoder($client);
+        // $geocoder->setApiKey(config('geocoder.key'));
+        // $geocoder->setLanguage(config('geocoder.language'));
+        // $geocoder->setRegion(config('geocoder.region'));
+        // $geocoder->setBounds(config('geocoder.bounds'));
+
+        // $address = $geocoder->getAddressForCoordinates($coords['latitude'], $coords['longitude']);
+
+
+        // $address = new Address([
+        //     'formatted_address' => $address['formatted_address'],
+        //     'place_id' => $address['place_id'],
+
+
+        // ]);
+        // Log::info($address);
+
+        // $localization->address()->save($address);
     }
 }

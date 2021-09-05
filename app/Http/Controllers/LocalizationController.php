@@ -18,7 +18,6 @@ class LocalizationController extends Controller
     {
         return QueryBuilder::for(Localization::class)
             ->allowedFilters('constatation_id')
-            ->with(['coords', 'address'])
             ->firstOrFail()
             ->toJson();
     }
@@ -75,7 +74,26 @@ class LocalizationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'accuracy' => 'nullable',
+            'address_components' => 'nullable',
+            'altitude' => 'nullable',
+            'altitudeAccuracy' => 'nullable',
+            'constatation_id' => 'nullable',
+            'formatted_address' => 'nullable',
+            'given_name' => 'nullable',
+            'heading' => 'nullable',
+            'latitude' => 'nullable',
+            'longitude' => 'nullable',
+            'place_id' => 'nullable',
+            'speed' => 'nullable',
+            'viewport' => 'nullable',
+        ]);
+
+        $localization = Localization::find($id);
+        $localization->fill($validated)->save();
+        
+        return $localization;
     }
 
     /**

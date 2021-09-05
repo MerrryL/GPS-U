@@ -37,12 +37,11 @@ Route::apiResources([
     'requests' => 'RequestController'
 ]);
 
-//Route::resource('constatations.images', 'ImageController');
 
 Route::post('/images/upload/{imageId}', [ImageController::class, 'storeImage']);
 
-// Route::get('/constatations/{constatationId?}/images', [ImageController::class, 'getFromConst']);
-// Route::get('/constatations/{constatationId?}/location', [LocalizationController::class, 'getFromConst']);
+Route::post('/constatations/{constatationId}/defineAThumb', [ConstatationController::class, 'defineAThumb']);
+
 
 Route::get('/options', [ConstatationController::class, 'getModels']);
 
@@ -65,7 +64,7 @@ Route::post('/sanctum/token', function (Request $request) {
 
 Route::post('login', [LoginController::class, 'authenticate']);
 
-Route::post('AdressFromCoordinates', function (Request $request) {
+Route::post('getAddressForCoordinates', function (Request $request) {
     $request->validate([
         'lat' => 'required',
         'lng' => 'required'
@@ -82,6 +81,24 @@ Route::post('AdressFromCoordinates', function (Request $request) {
     $geocoder->setBounds(config('geocoder.bounds'));
 
     return $geocoder->getAddressForCoordinates($request['lat'], $request['lng']);
+});
+
+Route::post('getCoordinatesForAddress', function (Request $request) {
+    $request->validate([
+        'formatted_address' => 'required',
+    ]);
+
+    $client = new \GuzzleHttp\Client([
+        'verify' => base_path('cacert.pem'),
+    ]);
+
+    $geocoder = new Geocoder($client);
+    $geocoder->setApiKey(config('geocoder.key'));
+    $geocoder->setLanguage(config('geocoder.language'));
+    $geocoder->setRegion(config('geocoder.region'));
+    $geocoder->setBounds(config('geocoder.bounds'));
+
+    return $geocoder->getCoordinatesForAddress($request['formatted_address']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {

@@ -14,7 +14,7 @@ class DossierController extends Controller
      */
     public function index()
     {
-        return Dossier::All()->toJson();
+        return Dossier::with('constatations')->orderBy('id', 'desc')->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -46,7 +46,7 @@ class DossierController extends Controller
      */
     public function show($id)
     {
-        //
+        return Dossier::find($id)->with('constatations')->first()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**

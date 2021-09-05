@@ -15,8 +15,19 @@ class CreateLocalizationsTable extends Migration
     {
         Schema::create('localizations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('constatation_id')->nullable()->constrained();
+            $table->decimal('accuracy', 10, 7)->nullable();
+            $table->json('address_components')->nullable();
+            $table->decimal('altitude', 10, 7)->nullable();
+            $table->decimal('altitudeAccuracy', 10, 7)->nullable();
+            $table->string('formatted_address')->nullable();
+            $table->string('given_name')->nullable();
+            $table->decimal('heading', 10, 7)->nullable();
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+            $table->string("place_id")->nullable();
+            $table->decimal('speed', 10, 7)->nullable();
+            $table->json('viewport')->nullable();
             $table->timestamps();
         });
     }
@@ -33,3 +44,4 @@ class CreateLocalizationsTable extends Migration
         Schema::dropIfExists('localizations');
     }
 }
+

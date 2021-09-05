@@ -8,22 +8,20 @@ use App\Models\Constatation;
 use App\Models\Localization;
 use App\Models\Coordinate;
 use App\Models\Address;
-use App\Models\AddressComponent;
-use App\Models\AddressComponentType;
-use App\Models\AddressGeometry;
-use App\Models\AddressGeometryLocation;
-use App\Models\AddressType;
+use App\Models\Image;
 
 class ConstatationController extends Controller
 {
+    protected $defaultRelationships = array('field_groups.fields', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
-        return Constatation::where(['modelType' => null])->with(['field_groups.fields', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::where(['modelType' => null])->with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -33,7 +31,7 @@ class ConstatationController extends Controller
      */
     public function getModels()
     {
-        return Constatation::where(['modelType' => 'model'])->with(['field_groups.fields', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::where(['modelType' => 'model'])->with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
     public function create()
     {
@@ -48,29 +46,29 @@ class ConstatationController extends Controller
      */
     public function store(Request $request)
     {
-        $localization = Localization::create(['name' => 'at_creation']);
-        if ($request->filled('location.coords')) {
-            $coordinate = new Coordinate($request->input('location.coords'));
-            $localization->coordinate()->save($coordinate);
-        }
+        // $localization = Localization::create(['name' => 'at_creation']);
+        // if ($request->filled('location.coords')) {
+        //     $coordinate = new Coordinate($request->input('location.coords'));
+        //     $localization->coordinate()->save($coordinate);
+        // }
 
-        //return $request->input('location');
+        // //return $request->input('location');
 
-        if ($request->filled('location.address')) {
-            $address = $request->input('location.address');
+        // if ($request->filled('location.address')) {
+        //     $address = $request->input('location.address');
 
-            if ($request->filled('location.address.geometry')) {
-                $address['geometry'] = json_encode($address['geometry']);
-            }
+        //     if ($request->filled('location.address.geometry')) {
+        //         $address['geometry'] = json_encode($address['geometry']);
+        //     }
 
-            $address = new Address($address);
-            $localization->address()->save($address);
-        }
+        //     $address = new Address($address);
+        //     $localization->address()->save($address);
+        // }
 
-        $constat = Constatation::create();
-        $constat->localization()->save($localization);
+        // $constat = Constatation::create();
+        // $constat->localization()->save($localization);
 
-        return Constatation::where(['id' => $constat['id']])->with(['field_groups.fields', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->first();
+        // return Constatation::where(['id' => $constat['id']])->with(['field_groups.fields', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->first();
 
         //return Localization::where(['id' => $localization['id']])->with(['address', 'coordinate'])->get();
     }
@@ -83,7 +81,7 @@ class ConstatationController extends Controller
      */
     public function show($id)
     {
-        return Constatation::where(['id' => $id])->with(['field_groups.fields', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images.media', 'observers'])->first()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::where(['id' => $id])->with($this->defaultRelationships)->first()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -113,7 +111,25 @@ class ConstatationController extends Controller
         $constatation = Constatation::find($id);
         $constatation->update($request->all());
 
-        return $constatation;
+        return $constatation->with($this->defaultRelationships)->fresh();
+    }
+
+    public function defineAThumb(Request $request, $id){
+        $request->validate([
+            'imageId' => 'required',
+        ]);
+
+
+        $image = Image::find($request->input('imageId'));
+
+        $constatation = Constatation::with($this->defaultRelationships)->find($id);
+        $constatation->clearMediaCollection('image');
+
+        $constatation->addMedia($image->getFirstMedia()->getPath())->preservingOriginal()
+        ->toMediaCollection('image');
+
+        return Constatation::with($this->defaultRelationships)->find($id);
+
     }
 
     /**
