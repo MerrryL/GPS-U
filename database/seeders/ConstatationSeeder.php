@@ -53,15 +53,15 @@ class ConstatationSeeder extends Seeder
                 }
 
                 $k = rand(1, 2);
-                for ($i = 0; $i < $k; $i++) {
-                    $image = new Image(['name' => 'sample']);
-                    $constatation->images()->save($image);
+                // for ($i = 0; $i < $k; $i++) {
+                //     $image = new Image(['name' => 'sample']);
+                //     $constatation->images()->save($image);
 
-                    $files = Storage::disk('samples')->allFiles();
-                    $randomFile = $files[rand(0, count($files) - 1)];
+                //     $files = Storage::disk('samples')->allFiles();
+                //     $randomFile = $files[rand(0, count($files) - 1)];
 
-                    $image->addMediaFromDisk($randomFile, 'samples')->preservingOriginal()->toMediaCollection();
-                }
+                //     $image->addMediaFromDisk($randomFile, 'samples')->preservingOriginal()->toMediaCollection();
+                // }
             });
     }
 }
