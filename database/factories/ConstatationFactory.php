@@ -25,7 +25,7 @@ class ConstatationFactory extends Factory
     public function definition()
     {
         return [
-            'comment' => $this->faker->text,
+            'description' => $this->faker->text,
             'modelType' => function () {
                 $number = $this->faker->numberBetween(0, 4);
                 switch ($number) {
