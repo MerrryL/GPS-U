@@ -13,7 +13,7 @@ class CreateReferringsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Referrings', function (Blueprint $table) {
+        Schema::create('referrings', function (Blueprint $table) {
             $table->id();
             $table->boolean('isAgent');
             $table->string('name');
@@ -28,6 +28,6 @@ class CreateReferringsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Referrings');
+        Schema::dropIfExists('referrings');
     }
 }
