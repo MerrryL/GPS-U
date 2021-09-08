@@ -13,9 +13,9 @@ class CreateImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Images', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('constatation_id')->constrained()->nullable();
+            $table->foreignId('constatation_id')->nullable()->constrained();
             $table->string('name')->nullable();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Images');
+        Schema::dropIfExists('images');
     }
 }
