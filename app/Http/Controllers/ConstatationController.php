@@ -12,30 +12,28 @@ use App\Models\Image;
 
 class ConstatationController extends Controller
 {
+    //TODO: verification and error
+    //DRY
     protected $defaultRelationships = array('field_groups.fields', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
     public function index()
     {
         return Constatation::where(['modelType' => null])->with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Some constatations are only models to "create from".
      *
      * @return \Illuminate\Http\Response
      */
     public function getModels()
     {
         return Constatation::where(['modelType' => 'model'])->with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
-    }
-    public function create()
-    {
-        //
     }
 
     /**
@@ -85,17 +83,6 @@ class ConstatationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -114,6 +101,13 @@ class ConstatationController extends Controller
         return $constatation->with($this->defaultRelationships)->fresh();
     }
 
+    /**
+     * Define a thumb image.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function defineAThumb(Request $request, $id){
         $request->validate([
             'imageId' => 'required',
@@ -129,7 +123,55 @@ class ConstatationController extends Controller
         ->toMediaCollection('image');
 
         return Constatation::with($this->defaultRelationships)->find($id);
+    }
 
+    /**
+     * Update the validation status.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function require_validation($id){
+        $constatation = Constatation::with($this->defaultRelationships)->find($id);
+        $constatation->requiresValidation=true;
+        $constatation->requiresValidationDate= now();
+
+        $constatation->save();
+
+        return $constatation;
+    }
+
+    /**
+     * Update the validation status.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function validate_constatation($id){
+        $constatation = Constatation::with($this->defaultRelationships)->find($id);
+        $constatation->requiresValidation=false;
+        $constatation->requiresValidationDate= null;
+        $constatation->isValidated=true;
+        $constatation->validationDate= now();
+        $constatation->save();
+
+        return $constatation;
+    }
+    
+    /**
+     * Update the validation status.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function unrequire_validation($id){
+        $constatation = Constatation::with($this->defaultRelationships)->find($id);
+        $constatation->requiresValidation=false;
+        $constatation->requiresValidationDate= null;
+
+        $constatation->save();
+
+        return $constatation;
     }
 
     /**

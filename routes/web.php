@@ -9,7 +9,6 @@ Use App\Http\Controllers\LocalizationController;
 Use App\Http\Controllers\ObservationController;
 Use App\Http\Controllers\ObservationDefaultRequestController;
 Use App\Http\Controllers\ObservationFieldController;
-Use App\Http\Controllers\ObserverController;
 Use App\Http\Controllers\RequestController;
 Use App\Models\User;*/
 
@@ -44,7 +43,6 @@ Route::get('login', [AuthenticatedSessionController::class, 'create'])
     'observation' => ObservationController::class,
     'observation-default-request' => ObservationDefaultRequestController::class,
     'observation-fields' => ObservationFieldController::class,
-    'observer' => ObserverController::class,
     'referring' => ReferringController::class,
     'request' => RequestController::class
 ]);*/

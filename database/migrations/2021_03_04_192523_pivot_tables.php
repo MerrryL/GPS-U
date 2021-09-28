@@ -25,10 +25,10 @@ class PivotTables extends Migration
             $table->foreignId('observation_id')->constrained();
         });
 
-        Schema::create('constatation_observer', function (Blueprint $table) {
+        Schema::create('constatation_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('constatation_id')->constrained();
-            $table->foreignId('observer_id')->constrained();
+            $table->foreignId('user_id')->constrained();
         });
         Schema::create('action_constatation', function (Blueprint $table) {
             $table->id();

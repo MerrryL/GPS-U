@@ -11,7 +11,6 @@ use App\Models\Localization;
 use App\Models\Action;
 use App\Models\Image;
 use App\Models\Observation;
-use App\Models\Observer;
 use App\Models\FieldGroup;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\HasMedia;
@@ -68,7 +67,7 @@ class Constatation extends Model implements HasMedia
 
     public function observers()
     {
-        return $this->belongsToMany(Observer::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function field_groups()

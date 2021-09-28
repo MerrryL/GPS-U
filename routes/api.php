@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ConstatationController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ObserverController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -23,6 +24,7 @@ use Spatie\Geocoder\Geocoder;
 */
 
 
+//TODO: these are opened for now for dev purposes, remove those not needed
 Route::apiResources([
     'constatations' => 'ConstatationController',
     'dossiers' => 'DossierController',
@@ -32,38 +34,27 @@ Route::apiResources([
     'observation-default-requests' => 'ObservationDefaultRequestsController',
     'fields' => 'FieldController',
     'field_groups' => 'FieldGroupController',
-    'observers' => 'ObserverController',
     'referrings' => 'ReferringController',
     'requests' => 'RequestController'
 ]);
 
-
+//Routes to actually upload/delete the media of an image
 Route::post('/images/upload/{imageId}', [ImageController::class, 'storeImage']);
 
+//Constatation related supplementary routes
 Route::post('/constatations/{constatationId}/defineAThumb', [ConstatationController::class, 'defineAThumb']);
-
+Route::post('/constatations/require_validation/{constatationId}', [ConstatationController::class, 'require_validation']);
+Route::post('/constatations/unrequire_validation/{constatationId}', [ConstatationController::class, 'unrequire_validation']);
+Route::post('/constatations/validate_constatation/{constatationId}', [ConstatationController::class, 'validate_constatation']);
 
 Route::get('/options', [ConstatationController::class, 'getModels']);
 
-Route::post('/sanctum/token', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
+Route::get('/observers', [ObserverController::class, 'index']);
 
-    $user = User::where('email', $request->email)->first();
 
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
 
-    return $user->createToken($request->device_name)->plainTextToken;
-});
-
-Route::post('login', [LoginController::class, 'authenticate']);
-
+//TODO : make it in a controller
+//Geocoding routes
 Route::post('getAddressForCoordinates', function (Request $request) {
     $request->validate([
         'lat' => 'required',
@@ -101,11 +92,36 @@ Route::post('getCoordinatesForAddress', function (Request $request) {
     return $geocoder->getCoordinatesForAddress($request['formatted_address']);
 });
 
+
+//TODO: clean and make sure everything works properly
+//Auth and user related routes
+Route::post('/sanctum/token', function (Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.'],
+        ]);
+    }
+
+    return $user->createToken($request->device_name)->plainTextToken;
+});
+
+Route::post('login', [LoginController::class, 'authenticate']);
+//TODO: implement the logic
+Route::get('me', function () {
+    return User::where(['id' => '1'])->first();
+});
+
+//TODO: actually put most of the routes in this middleware
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])
         ->name('logout');
 });
 
-Route::get('me', function () {
-    return User::where(['id' => '1'])->first();
-});
+

@@ -9,12 +9,10 @@ use App\Models\Localization;
 use App\Models\Image;
 use App\Models\Dossier;
 use App\Models\Action;
-use App\Models\Address;
-use App\Models\Coordinate;
 use App\Models\Observation;
-use App\Models\Observer;
 use App\Models\FieldGroup;
 use App\Models\Field;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 use Spatie\Geocoder\Geocoder;
@@ -36,7 +34,7 @@ class ConstatationSeeder extends Seeder
 
                 $constatation->dossiers()->saveMany(Dossier::factory()->count(1)->make());
                 $constatation->actions()->saveMany(Action::Factory()->count(2)->make());
-                $constatation->observers()->saveMany(Observer::factory()->count(2)->make());
+                $constatation->observers()->save(User::where('id', 1));
                 $constatation->observations()->saveMany(Observation::Factory()->count(3)->make());
 
                 $k = rand(2, 5);

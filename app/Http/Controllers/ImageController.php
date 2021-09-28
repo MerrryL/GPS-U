@@ -76,6 +76,10 @@ class ImageController extends Controller
         //return $path;
         $image = Image::find($id);
         $image->addMedia('images/' . $filename)->toMediaCollection('image');
+
+        //TODO: if constatation has no thumb yet, define it as thumb
+        //$constatation_medias = Constatation::find($image['constatation_id'])->getMedia();
+
         
         return $image->load('media');
     }

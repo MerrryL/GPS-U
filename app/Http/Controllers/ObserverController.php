@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Observer;
+use App\Models\User;
 
 class ObserverController extends Controller
 {
@@ -12,9 +12,10 @@ class ObserverController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //TODO:filter results
     public function index()
     {
-        //
+        return User::all();
     }
 
     /**
