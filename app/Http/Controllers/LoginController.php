@@ -25,7 +25,33 @@ class LoginController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
+        $token = $user->createToken("token");
 
+        return ['data' => ['token' => $token->plainTextToken, 'user' => $user]];
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+            'firstName' => 'required',
+            'lastName' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if ($user !== null) {
+            throw ValidationException::withMessages([
+                'email' => ['This email adress is already in use.'],
+            ]);
+        } else {
+            $user = User::create([
+                'firstName' => $request->input('firstName'),
+                'lastName' => $request->input('lastName'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+            ]);
+        }
         $token = $user->createToken("token");
 
         return ['data' => ['token' => $token->plainTextToken, 'user' => $user]];

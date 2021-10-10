@@ -44,31 +44,12 @@ class ConstatationController extends Controller
      */
     public function store(Request $request)
     {
-        // $localization = Localization::create(['name' => 'at_creation']);
-        // if ($request->filled('location.coords')) {
-        //     $coordinate = new Coordinate($request->input('location.coords'));
-        //     $localization->coordinate()->save($coordinate);
-        // }
+        //TODO: add features
+        $constat = Constatation::create();
+        $localization = Localization::create(['name' => 'at_creation']);
+        $constat->localization()->save($localization);
 
-        // //return $request->input('location');
-
-        // if ($request->filled('location.address')) {
-        //     $address = $request->input('location.address');
-
-        //     if ($request->filled('location.address.geometry')) {
-        //         $address['geometry'] = json_encode($address['geometry']);
-        //     }
-
-        //     $address = new Address($address);
-        //     $localization->address()->save($address);
-        // }
-
-        // $constat = Constatation::create();
-        // $constat->localization()->save($localization);
-
-        // return Constatation::where(['id' => $constat['id']])->with(['field_groups.fields', 'localization.coords', 'localization.address', 'dossiers', 'actions', 'images', 'observers'])->first();
-
-        //return Localization::where(['id' => $localization['id']])->with(['address', 'coordinate'])->get();
+        return Constatation::where(['id' => $constat['id']])->with($this->defaultRelationships)->first();
     }
 
     /**
@@ -157,7 +138,7 @@ class ConstatationController extends Controller
 
         return $constatation;
     }
-    
+
     /**
      * Update the validation status.
      *

@@ -17,9 +17,4 @@ class Localization extends Model
     {
         return $this->hasOne(Constatation::class);
     }
-
-    // public function getGeometryAttribute($value)
-    // {
-    //     return json_decode($value);
-    // }
 }

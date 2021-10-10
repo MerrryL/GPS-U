@@ -113,6 +113,8 @@ Route::post('/sanctum/token', function (Request $request) {
 });
 
 Route::post('login', [LoginController::class, 'authenticate']);
+
+Route::post('register', [LoginController::class, 'register']);
 //TODO: implement the logic
 Route::get('me', function () {
     return User::where(['id' => '1'])->first();

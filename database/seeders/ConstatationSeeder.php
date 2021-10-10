@@ -34,8 +34,8 @@ class ConstatationSeeder extends Seeder
 
                 $constatation->dossiers()->saveMany(Dossier::factory()->count(1)->make());
                 $constatation->actions()->saveMany(Action::Factory()->count(2)->make());
-                $constatation->observers()->save(User::where('id', 1));
-                $constatation->observations()->saveMany(Observation::Factory()->count(3)->make());
+                $constatation->observers()->saveMany([User::where('id', 1)->first()]);
+                //$constatation->observations()->saveMany(Observation::Factory()->count(3)->make());
 
                 $k = rand(2, 5);
                 for ($i = 0; $i < $k; $i++) {
@@ -59,6 +59,10 @@ class ConstatationSeeder extends Seeder
                     $randomFile = $files[rand(0, count($files) - 1)];
 
                     $image->addMediaFromDisk($randomFile, 'samples')->preservingOriginal()->toMediaCollection();
+
+                    if ($i == 0) {
+                        $constatation->addMediaFromDisk($randomFile, 'samples')->preservingOriginal()->toMediaCollection('image');
+                    }
                 }
             });
     }
