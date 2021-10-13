@@ -6,8 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Constatation;
 use App\Models\Localization;
-use App\Models\Coordinate;
-use App\Models\Address;
+use App\Models\User;
 use App\Models\Image;
 
 class ConstatationController extends Controller
@@ -142,8 +141,8 @@ class ConstatationController extends Controller
     /**
      * Update the validation status.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
+     * @param  int  $id
      */
     public function unrequire_validation($id){
         $constatation = Constatation::with($this->defaultRelationships)->find($id);
@@ -153,6 +152,25 @@ class ConstatationController extends Controller
         $constatation->save();
 
         return $constatation;
+    }
+
+    /**
+     * Update the observers.
+     * 
+     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update_observers(Request $request, $id){
+        $request->validate([
+            'observers' => 'array'
+        ]);
+
+        $constatation = Constatation::with($this->defaultRelationships)->find($id);
+
+        $constatation->observers()->sync($request->input('observers'));
+
+        return $constatation->refresh();
     }
 
     /**

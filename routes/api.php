@@ -47,6 +47,8 @@ Route::post('/constatations/require_validation/{constatationId}', [ConstatationC
 Route::post('/constatations/unrequire_validation/{constatationId}', [ConstatationController::class, 'unrequire_validation']);
 Route::post('/constatations/validate_constatation/{constatationId}', [ConstatationController::class, 'validate_constatation']);
 
+Route::post('constatations/{constatationId}/observers', [ConstatationController::class, 'update_observers']);
+
 Route::get('/options', [ConstatationController::class, 'getModels']);
 
 Route::get('/observers', [ObserverController::class, 'index']);
