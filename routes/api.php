@@ -29,6 +29,7 @@ Route::apiResources([
     'constatations' => 'ConstatationController',
     'dossiers' => 'DossierController',
     'images' => 'ImageController',
+    'followups' => 'FollowupController',
     'localizations' => 'LocalizationController',
     'observations' => 'ObservationController',
     'observation-default-requests' => 'ObservationDefaultRequestsController',
