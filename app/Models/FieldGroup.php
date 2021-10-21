@@ -15,6 +15,7 @@ class FieldGroup extends Model
     {
         return $this->belongsTo(Constatation::class);
     }
+    
     public function fields()
     {
         return $this->hasMany(Field::class);

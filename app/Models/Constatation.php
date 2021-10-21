@@ -5,13 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-use App\Models\Dossier;
-use App\Models\Localization;
-use App\Models\Action;
-use App\Models\Image;
-use App\Models\Observation;
-use App\Models\FieldGroup;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -62,7 +55,7 @@ class Constatation extends Model implements HasMedia
 
     public function observations()
     {
-        return $this->belongsToMany(Observation::class);
+        return $this->hasMany(Observation::class);
     }
 
     public function observers()

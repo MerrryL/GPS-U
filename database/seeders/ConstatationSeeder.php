@@ -27,7 +27,7 @@ class ConstatationSeeder extends Seeder
      */
     public function run()
     {
-        Constatation::factory()->count(30)
+        Constatation::factory()->count(20)
             ->create()
             ->each(function ($constatation) {
                 $constatation->localization()->save(Localization::factory()->make());

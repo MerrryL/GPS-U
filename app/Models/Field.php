@@ -16,4 +16,14 @@ class Field extends Model
     {
         return $this->belongsTo(FieldGroup::class);
     }
+
+    public function observations()
+    {
+        return $this->belongsTo(Observation::class);
+    }
+
+    public function followups()
+    {
+        return $this->hasMany(Followup::class);
+    }
 }

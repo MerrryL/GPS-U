@@ -11,6 +11,16 @@ class Observation extends Model
 
     public function constatations()
     {
-        return $this->belongsToMany(Constatation::class);
+        return $this->hasMany(Constatation::class);
+    }
+
+    public function fields()
+    {
+        return $this->hasMany(Field::class);
+    }
+
+    public function observation_type()
+    {
+        return $this->belongsTo(ObservationType::class);
     }
 }

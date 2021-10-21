@@ -93,13 +93,14 @@ class ConstatationController extends Controller
             'imageId' => 'required',
         ]);
 
-
         $image = Image::find($request->input('imageId'));
+        $image = $image->fresh();
+        //return [$request->input('imageId'), $image->getMedia('image')];
 
         $constatation = Constatation::with($this->defaultRelationships)->find($id);
         $constatation->clearMediaCollection('image');
 
-        $constatation->addMedia($image->getFirstMedia()->getPath())->preservingOriginal()
+        $constatation->addMedia($image->getFirstMedia('image')->getPath())->preservingOriginal()
         ->toMediaCollection('image');
 
         return Constatation::with($this->defaultRelationships)->find($id);
@@ -170,7 +171,7 @@ class ConstatationController extends Controller
 
         $constatation->observers()->sync($request->input('observers'));
 
-        return $constatation->refresh();
+        return $constatation->refresh()['observers'];
     }
 
     /**
