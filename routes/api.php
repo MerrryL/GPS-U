@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ConstatationController;
+namespace App\Http\Controllers\Constatation;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ObserverController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -22,11 +23,33 @@ use Spatie\Geocoder\Geocoder;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['namespace' => 'Constatation'], function () {
+    Route::apiResources([
+        'constatations' => 'ConstatationController',
+    ]);
+    Route::apiResources([
+        'constatations.fields' => 'ConstatationFieldController',
+        'constatations.images' => 'ConstatationImageController',
+        'constatations.localization' => 'ConstatationLocalizationController',
+        'constatations.observers' => 'ConstatationObserverController',
+    ]);
+    
+    //Constatation related supplementary routes
+    Route::get('/constatations/{constatation}/images/{image}/defineAsThumb', [ConstatationImageController::class, 'defineAsThumb']);
+    Route::post('/constatations/{constatation}/images/{image}/upload', [ConstatationImageController::class, 'upload']);
 
+    Route::post('/constatations/{constatation}/require_validation', [ConstatationController::class, 'require_validation']);
+    Route::post('/constatations/{constatation}/refuse_validation', [ConstatationController::class, 'refuse_validation']);
+    Route::post('/constatations/{constatation}/validate_constatation', [ConstatationController::class, 'validate_constatation']);
+
+    Route::post('constatations/{constatationId}/observers', [ConstatationController::class, 'update_observers']);
+
+    Route::get('/options', [ConstatationController::class, 'getModels']);
+
+});
 
 //TODO: these are opened for now for dev purposes, remove those not needed
 Route::apiResources([
-    'constatations' => 'ConstatationController',
     'dossiers' => 'DossierController',
     'images' => 'ImageController',
     'followups' => 'FollowupController',
@@ -39,18 +62,7 @@ Route::apiResources([
     'requests' => 'RequestController'
 ]);
 
-//Routes to actually upload/delete the media of an image
-Route::post('/images/upload/{imageId}', [ImageController::class, 'storeImage']);
 
-//Constatation related supplementary routes
-Route::post('/constatations/{constatationId}/defineAThumb', [ConstatationController::class, 'defineAThumb']);
-Route::post('/constatations/require_validation/{constatationId}', [ConstatationController::class, 'require_validation']);
-Route::post('/constatations/unrequire_validation/{constatationId}', [ConstatationController::class, 'unrequire_validation']);
-Route::post('/constatations/validate_constatation/{constatationId}', [ConstatationController::class, 'validate_constatation']);
-
-Route::post('constatations/{constatationId}/observers', [ConstatationController::class, 'update_observers']);
-
-Route::get('/options', [ConstatationController::class, 'getModels']);
 
 Route::get('/observers', [ObserverController::class, 'index']);
 

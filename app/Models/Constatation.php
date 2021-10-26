@@ -14,7 +14,7 @@ class Constatation extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
 
-    protected $fillable = ['comment'];
+    protected $fillable = ['description'];
 
 
     public function registerMediaCollections(): void
