@@ -45,14 +45,24 @@ Route::group(['namespace' => 'Constatation'], function () {
     Route::post('/constatations/{constatation}/images/{image}/upload', [ConstatationImageController::class, 'upload']);
     Route::delete('/constatations/{constatation}/images/{image}/remove', [ConstatationImageController::class, 'remove']);
 
-    // C
-    //Route::post('constatations/{constatationId}/observers', [ConstatationController::class, 'update_observers']);
-
     Route::get('/options', [ConstatationController::class, 'getModels']);
 
 });
 
 Route::get('/observers', [ObserverController::class, 'index']);
+
+Route::group(['namespace' => 'Observation'], function () {
+    Route::apiResources([
+        'observations' => 'ObservationController',
+    ]);
+    Route::apiResources([
+        //'constatations.fields' => 'ConstatationFieldController',
+        //'constatations.images' => 'ConstatationImageController',
+        //'constatations.localization' => 'ConstatationLocalizationController',
+        'constatations.codexes' => 'ConstatationCodexController',
+    ]);
+
+});
 
 //TODO: these are opened for now for dev purposes, remove those not needed
 // Route::apiResources([
@@ -70,6 +80,7 @@ Route::get('/observers', [ObserverController::class, 'index']);
 Route::apiResources([
     'fields' => 'FieldController',
     'field_groups' => 'FieldGroupController',
+    'codexes' => 'CodexController',
 ]);
 
 //Geocoding routes

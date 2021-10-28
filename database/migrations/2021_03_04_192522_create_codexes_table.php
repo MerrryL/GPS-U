@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateObservationsTable extends Migration
+class CreateCodexesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateObservationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('observations', function (Blueprint $table) {
+        Schema::create('codexes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('codex_id')->nullable()->constrained();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateObservationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('observations');
+        Schema::dropIfExists('codexes');
     }
 }

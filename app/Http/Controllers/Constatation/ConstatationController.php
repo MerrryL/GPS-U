@@ -55,9 +55,9 @@ class ConstatationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Constatation $constatation)
     {
-        return Constatation::where(['id' => $id])->with($this->defaultRelationships)->first()->toJson(JSON_PRETTY_PRINT);
+        return $constatation->load($this->defaultRelationships)->toJson(JSON_PRETTY_PRINT);
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Log;
 
@@ -16,14 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $files = Storage::disk('images')->directories();
-        foreach ($files as $file) {
-            Storage::disk('images')->deleteDirectory($file);
-        }
-
         $this->call([
             UserSeeder::class,
             ConstatationSeeder::class,
+            CodexSeeder::class,
         ]);
     }
 }

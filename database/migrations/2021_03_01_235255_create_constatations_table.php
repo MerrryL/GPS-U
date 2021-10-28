@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -15,6 +16,11 @@ class CreateConstatationsTable extends Migration
      */
     public function up()
     {
+        $files = Storage::disk('images')->directories();
+        foreach ($files as $file) {
+            Storage::disk('images')->deleteDirectory($file);
+        }
+
         Schema::create('constatations', function (Blueprint $table) {
             $table->id();
             $table->string('description')->nullable();

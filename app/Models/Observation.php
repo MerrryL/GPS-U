@@ -9,6 +9,8 @@ class Observation extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function constatations()
     {
         return $this->hasMany(Constatation::class);
@@ -22,5 +24,10 @@ class Observation extends Model
     public function observation_type()
     {
         return $this->belongsTo(ObservationType::class);
+    }
+
+    public function codex()
+    {
+        return $this->belongsTo(Codex::class);
     }
 }
