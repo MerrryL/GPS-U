@@ -30,7 +30,6 @@ class ConstatationImageController extends Controller
      */
     public function store(Request $request, Constatation $constatation)
     {
-        return "test test test";
         return $constatation->images()->create($request->validate(['name' => 'required']));
     }
 
@@ -60,7 +59,6 @@ class ConstatationImageController extends Controller
      */
     public function update(Request $request, Constatation $constatation, Image $image)
     {
-        return "test test test";
         if($image->constatation_id != $constatation->id ) {
             abort (404);
         }
@@ -116,6 +114,33 @@ class ConstatationImageController extends Controller
             $constatation->addMedia($imagePath)->preservingOriginal()->toMediaCollection('image');
 
             return $constatation->load('field_groups.fields', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+        }
+
+        return $image->load('media');
+    }
+
+    /**
+     * Remove the media of an image in storage.
+     *
+     * @param  \App\Models\Constatation  $constatation
+     * @param  \App\Models\Image  $image
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function remove(Constatation $constatation, Image $image)
+    {
+        if($image->constatation_id != $constatation->id )
+        {
+            abort (404);
+        }
+
+        try
+        {
+            $image->clearMediaCollection('image');
+        }
+        catch(\Exception $e)
+        {
+            throw $e;
         }
 
         return $image->load('media');

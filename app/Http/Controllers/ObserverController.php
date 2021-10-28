@@ -16,11 +16,6 @@ class ObserverController extends Controller
     //TODO:filter results
     public function index()
     {
-        // return QueryBuilder::for(Field::class)
-        // ->allowedIncludes('observations')
-        // ->allowedFilters('field_group_id')
-        // ->get()
-        // ->toJson();
         return User::all();
     }
 

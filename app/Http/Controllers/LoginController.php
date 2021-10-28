@@ -27,7 +27,7 @@ class LoginController extends Controller
         }
         $token = $user->createToken("token");
 
-        return ['data' => ['token' => $token->plainTextToken, 'user' => $user]];
+        return ['token' => $token->plainTextToken, 'user' => $user];
     }
 
     public function register(Request $request)
@@ -57,8 +57,15 @@ class LoginController extends Controller
         return ['data' => ['token' => $token->plainTextToken, 'user' => $user]];
     }
 
+    public function me()
+    {
+        //return "test";
+        return Auth::user();
+    }
+
     public function logout(Request $request)
     {
+        
         Auth::logout();
 
         $request->session()->invalidate();

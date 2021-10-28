@@ -17,7 +17,7 @@ class ConstatationObserverController extends Controller
      */
     public function index(Constatation $constatation)
     {
-        //
+        return $constatation->observers->toJson();
     }
 
     /**
@@ -29,7 +29,13 @@ class ConstatationObserverController extends Controller
      */
     public function store(Request $request, Constatation $constatation)
     {
-        //
+        $request->validate([
+            'observers' => 'array'
+        ]);
+
+        $constatation->observers()->sync($request->input('observers'));
+
+        return $constatation->observers->toJson();
     }
 
     /**

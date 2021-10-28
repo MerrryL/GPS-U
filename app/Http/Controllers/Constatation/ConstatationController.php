@@ -122,26 +122,6 @@ class ConstatationController extends Controller
         return $constatation->load($this->defaultRelationships);
     }
 
-
-    /**
-     * Update the observers.
-     * 
-     * @param int $id
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function update_observers(Request $request, $id){
-        $request->validate([
-            'observers' => 'array'
-        ]);
-
-        $constatation = Constatation::with($this->defaultRelationships)->find($id);
-
-        $constatation->observers()->sync($request->input('observers'));
-
-        return $constatation->refresh()['observers'];
-    }
-
     /**
      * Remove the specified resource from storage.
      *
