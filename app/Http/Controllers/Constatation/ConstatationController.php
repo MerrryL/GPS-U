@@ -69,6 +69,7 @@ class ConstatationController extends Controller
      */
     public function update(Request $request, Constatation $constatation)
     {
+        
         $constatation->update($request->validate([
             'description' => 'required',
         ]));

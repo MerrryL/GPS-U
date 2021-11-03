@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Request;
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RequestFactory extends Factory
+class TaskFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Request::class;
+    protected $model = Task::class;
 
     /**
      * Define the model's default state.
@@ -22,7 +22,7 @@ class RequestFactory extends Factory
     public function definition()
     {
         return [
-            'name'=> $this->faker->word,
+            //
         ];
     }
 }

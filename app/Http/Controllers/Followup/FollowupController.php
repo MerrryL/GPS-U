@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Models\Followup;
 
-class ObserverController extends Controller
+class FollowupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    //TODO:filter results
     public function index()
     {
-        return User::all();
+        //
     }
 
     /**
@@ -72,7 +70,7 @@ class ObserverController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //
     }
 
     /**

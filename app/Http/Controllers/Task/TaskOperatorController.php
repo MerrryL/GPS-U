@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Task;
 
+use App\Http\Controllers\Controller;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Request;
 
-class RequestController extends Controller
+class TaskOperatorTaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Task $task)
     {
         //
     }
@@ -20,9 +23,10 @@ class RequestController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Task $task)
     {
         //
     }
@@ -31,9 +35,10 @@ class RequestController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Task $task)
     {
         //
     }
@@ -41,10 +46,11 @@ class RequestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Task  $task
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $task, User $user)
     {
         //
     }
@@ -52,10 +58,11 @@ class RequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Task  $task
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task, User $user)
     {
         //
     }
@@ -64,10 +71,11 @@ class RequestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Task  $task
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task, User $user)
     {
         //
     }
@@ -75,10 +83,11 @@ class RequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Task  $task
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task, User $user)
     {
         //
     }

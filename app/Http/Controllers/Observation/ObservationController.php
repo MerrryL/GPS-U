@@ -10,7 +10,7 @@ class ObservationController extends Controller
 {
     //TODO: verification and error
     //DRY
-    protected $defaultRelationships = array('codex');
+    protected $defaultRelationships = array('codex', 'field_groups.fields');
 
     /**
      * Display a listing of the resource.
@@ -23,16 +23,6 @@ class ObservationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -40,7 +30,7 @@ class ObservationController extends Controller
      */
     public function store(Request $request)
     {
-        return Observation::create(['name' => 'test']);
+        return Observation::create(['name' => 'test', 'code' => '123', 'short_description' => 'none', 'description' => 'none', 'fine_amount'=> "Jusque 500€"]);
     }
 
     /**
@@ -55,26 +45,24 @@ class ObservationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Observation $observation)
     {
-        //
+        $observation->update($request->validate([
+            'codex_id' => 'required',
+            'fine_amount' => 'required',
+            'description' => 'required',
+            'short_description' => 'required',
+            'name' => 'required',
+            'code' => 'required',
+        ]));
+        
+        return $observation->load($this->defaultRelationships);
     }
 
     /**
@@ -83,7 +71,7 @@ class ObservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Observation $observation)
     {
         //
     }

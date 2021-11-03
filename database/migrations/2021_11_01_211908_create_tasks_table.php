@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateObservationsTable extends Migration
+class CreateTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateObservationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('observations', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
             $table->string('name');
-            $table->string('short_description');
             $table->string('description');
-            $table->string('fine_amount');
-            $table->foreignId('codex_id')->nullable()->constrained();
-            $table->foreignId('observation_type_id')->nullable()->constrained();
+            $table->timestamp('realisation_date');
+            $table->timestamp('report_date');
+            $table->timestamp('report_periodicity');
+            $table->foreignId('task_status_id')->nullable()->constrained();
+            $table->foreignId('followup_id')->nullable()->constrained();
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateObservationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('observations');
+        Schema::dropIfExists('tasks');
     }
 }

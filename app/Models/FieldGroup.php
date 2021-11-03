@@ -11,13 +11,15 @@ class FieldGroup extends Model
 
     public $fillable = ['name', 'type', 'logical_operator'];
 
-    public function constatation()
+    public function observation()
     {
-        return $this->belongsTo(Constatation::class);
+        return $this->belongsTo(Observation::class);
     }
-    
+
     public function fields()
     {
         return $this->hasMany(Field::class);
     }
+
+
 }

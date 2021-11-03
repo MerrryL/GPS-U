@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FollowupStatus;
 use Illuminate\Http\Request;
-use App\Models\Followup;
 
-class FollowupController extends Controller
+class FollowupStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,16 +13,6 @@ class FollowupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -41,21 +31,10 @@ class FollowupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\FollowupStatus  $followupStatus
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function show(FollowupStatus $followupStatus)
     {
         //
     }
@@ -64,10 +43,10 @@ class FollowupController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\FollowupStatus  $followupStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, FollowupStatus $followupStatus)
     {
         //
     }
@@ -75,10 +54,10 @@ class FollowupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\FollowupStatus  $followupStatus
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(FollowupStatus $followupStatus)
     {
         //
     }

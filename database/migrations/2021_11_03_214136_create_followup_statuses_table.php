@@ -5,9 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
-class CreateObservationTypesTable extends Migration
+class CreateFollowupStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,20 +15,21 @@ class CreateObservationTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('observation_types', function (Blueprint $table) {
+        Schema::create('followup_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
         });
 
         $array = [
-            ['name' => "Infraction"],
-            ['name' => "Doléance"],
-            ['name' => "Dégradation"],
-            ['name' => "Vandalisme"],
+            ['name' => "Brouillon"],
+            ['name' => "Nouveau"],
+            ['name' => "En cours"],
+            ['name' => "Terminée"],
+            ['name' => "Annulée"],
        ];
 
-        DB::table('observation_types')->insert($array);
+        DB::table('followup_statuses')->insert($array);
     }
 
     /**
@@ -39,6 +39,6 @@ class CreateObservationTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('observation_types');
+        Schema::dropIfExists('followup_statuses');
     }
 }

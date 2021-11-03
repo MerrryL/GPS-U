@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Codex;
 
-class CodexSeeder extends Seeder
+class FollowupStatusSeeder extends Seeder
 {
     /**
      * Run the database seeds.

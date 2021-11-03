@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Referring;
+use App\Models\FollowupStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ReferringFactory extends Factory
+class FollowupStatusFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Referring::class;
+    protected $model = FollowupStatus::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,7 @@ class ReferringFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->name,
-            'isAgent'=> $this->faker->boolean
+            //
         ];
     }
 }

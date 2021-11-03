@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Constatation;
-use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ObserverController;
 
 use Illuminate\Http\Request;
@@ -56,10 +55,61 @@ Route::group(['namespace' => 'Observation'], function () {
         'observations' => 'ObservationController',
     ]);
     Route::apiResources([
-        //'constatations.fields' => 'ConstatationFieldController',
+        'observations.images' => 'ObservationImageController',
+        //'constatations.localization' => 'ConstatationLocalizationController',
+        'observations.codexes' => 'ObservationCodexController',
+    ]);
+
+    Route::group(['namespace' => 'FieldGroup'], function () {
+        Route::apiResources([
+            'observations.field_groups' => 'ObservationFieldGroupController',
+            'observations.field_groups.fields' => 'ObservationFieldGroupFieldController',
+        ]);
+    });
+
+    Route::group(['namespace' => 'Followup'], function () {
+        Route::apiResources([
+            'observations.followups' => 'ObservationFollowupController',
+            'observations.followups.tasks' => 'ObservationFollowupTaskController',
+        ]);
+    });
+});
+
+// Route::group(['namespace' => 'Followup'], function () {
+//     Route::apiResources([
+//         'followups' => 'FollowupController',
+//     ]);
+//     Route::apiResources([
+//         'followups.tasks' => 'FollowupTaskController',
+//         //'constatations.images' => 'ConstatationImageController',
+//         //'constatations.localization' => 'ConstatationLocalizationController',
+//         //'constatations.codexes' => 'ConstatationCodexController',
+//     ]);
+
+// });
+
+// Route::group(['namespace' => 'Task'], function () {
+//     Route::apiResources([
+//         'tasks' => 'TaskController',
+//     ]);
+//     Route::apiResources([
+//         //'followups.tasks' => 'FollowupTaskController',
+//         //'constatations.images' => 'ConstatationImageController',
+//         //'constatations.localization' => 'ConstatationLocalizationController',
+//         //'constatations.codexes' => 'ConstatationCodexController',
+//     ]);
+
+// });
+
+Route::group(['namespace' => 'Dossier'], function () {
+    Route::apiResources([
+        'dossiers' => 'DossierController',
+    ]);
+    Route::apiResources([
+        //'followups.tasks' => 'FollowupTaskController',
         //'constatations.images' => 'ConstatationImageController',
         //'constatations.localization' => 'ConstatationLocalizationController',
-        'constatations.codexes' => 'ConstatationCodexController',
+        //'constatations.codexes' => 'ConstatationCodexController',
     ]);
 
 });
@@ -78,8 +128,6 @@ Route::group(['namespace' => 'Observation'], function () {
 // ]);
 
 Route::apiResources([
-    'fields' => 'FieldController',
-    'field_groups' => 'FieldGroupController',
     'codexes' => 'CodexController',
 ]);
 

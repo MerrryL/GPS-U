@@ -15,7 +15,10 @@ class CreateFollowupsTable extends Migration
     {
         Schema::create('followups', function (Blueprint $table) {
             $table->id();
-            $table->integer('status');
+            $table->string('name');
+            $table->string('description');
+            $table->foreignId('followup_status_id')->nullable()->constrained();
+            $table->foreignId('observation_id')->nullable()->constrained();
             $table->timestamps();
         });
     }
