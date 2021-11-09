@@ -26,4 +26,9 @@ class Field extends Model
     {
         return $this->hasMany(Followup::class);
     }
+
+    public function constatations()
+    {
+        return $this->hasMany(Constatation::class);
+    }
 }

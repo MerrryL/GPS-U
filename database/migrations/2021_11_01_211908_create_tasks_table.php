@@ -23,6 +23,7 @@ class CreateTasksTable extends Migration
             $table->foreignId('task_status_id')->nullable()->constrained();
             $table->foreignId('followup_id')->nullable()->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

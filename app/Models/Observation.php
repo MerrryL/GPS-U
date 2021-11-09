@@ -13,7 +13,7 @@ class Observation extends Model
 
     public function constatations()
     {
-        return $this->hasMany(Constatation::class);
+        return $this->belongsToMany(Constatation::class);
     }
 
     public function field_groups()

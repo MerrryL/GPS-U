@@ -14,7 +14,7 @@ class FollowupStatusController extends Controller
      */
     public function index()
     {
-        //
+        return FollowupStatus::all()->toJson();
     }
 
     /**

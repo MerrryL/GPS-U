@@ -20,6 +20,7 @@ class CreateFieldsTable extends Migration
             $table->boolean('isDefault');
             $table->foreignId('field_group_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 
 class ObservationFollowupTaskController extends Controller
 {
+    protected $defaultRelationships = array('operators', 'task_status');
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +40,26 @@ class ObservationFollowupTaskController extends Controller
         if($followup->observation_id != $observation->id ) {
             abort (404);
         }
-        return $followup->tasks()->create($request->validate(['name' => 'required', 'description' => 'required', 'realisation_date' => 'required', 'report_date' => 'required', 'report_periodicity' => 'required']));
+
+        $request->validate([
+            'name' => 'required', 
+            'description' => 'required', 
+            'realisation_date' => 'required', 
+            'report_date' => 'required', 
+            'report_periodicity' => 'required', 
+            'task_status_id' => 'required', 
+            'operators_id' => 'required'
+        ]);
+
+        $task = $followup->tasks()->create($request->all());
+        
+        $operators = $request->input('operators_id');
+
+        $operators = array_column($operators, 'id');
+
+        $task->operators()->sync($operators);
+
+        return $task->load($this->defaultRelationships);
     }
 
     /**
@@ -79,7 +100,23 @@ class ObservationFollowupTaskController extends Controller
             abort (404);
         }
 
-        return $task->update($request->validate(['name' => 'required', 'description' => 'required', 'realisation_date' => 'required', 'report_date' => 'required', 'report_periodicity' => 'required']));
+        return $task->update($request->validate([
+            'name' => 'required', 
+            'description' => 'required', 
+            'realisation_date' => 'required', 
+            'report_date' => 'required', 
+            'report_periodicity' => 'required', 
+            'task_status_id' => 'required', 
+            'operators_id' => 'required'
+        ]));
+
+        $operators = $request->input('operators_id');
+
+        $$operators = array_column($operators, 'id');
+
+        $task->operators()->sync($operators);
+
+        return $task->load($defaultRelationships);
     }
 
     /**

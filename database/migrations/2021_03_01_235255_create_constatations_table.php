@@ -30,6 +30,7 @@ class CreateConstatationsTable extends Migration
             $table->boolean('requiresValidation')->default(false);
             $table->date('requiresValidationDate')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -18,6 +18,7 @@ class CreateDossiersTable extends Migration
             $table->string('name');
             $table->boolean('isCurrent')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

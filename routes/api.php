@@ -32,6 +32,7 @@ Route::group(['namespace' => 'Constatation'], function () {
         'constatations.images' => 'ConstatationImageController',
         'constatations.localization' => 'ConstatationLocalizationController',
         'constatations.observers' => 'ConstatationObserverController',
+        'constatations.observations' => 'ConstatationObservationController',
     ]);
 
     // Constatation related supplementary routes
@@ -48,7 +49,7 @@ Route::group(['namespace' => 'Constatation'], function () {
 
 });
 
-Route::get('/observers', [ObserverController::class, 'index']);
+
 
 Route::group(['namespace' => 'Observation'], function () {
     Route::apiResources([
@@ -128,7 +129,12 @@ Route::group(['namespace' => 'Dossier'], function () {
 // ]);
 
 Route::apiResources([
+    'supervisors' => 'SupervisorController',
     'codexes' => 'CodexController',
+    'observers' => 'ObserverController',
+    'operators' => 'OperatorController',
+    'followup_status' => 'FollowupStatusController',
+    'task_status' => 'TaskStatusController'
 ]);
 
 //Geocoding routes

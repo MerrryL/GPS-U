@@ -11,7 +11,7 @@ class ConstatationController extends Controller
 {
     //TODO: verification and error
     //DRY
-    protected $defaultRelationships = array('field_groups.fields', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+    protected $defaultRelationships = array('fields.field_groups', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
 
     /**
      * Display a listing of the resource.

@@ -23,6 +23,7 @@ class CreateObservationsTable extends Migration
             $table->foreignId('codex_id')->nullable()->constrained();
             $table->foreignId('observation_type_id')->nullable()->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

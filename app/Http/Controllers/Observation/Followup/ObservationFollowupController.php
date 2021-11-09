@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ObservationFollowupController extends Controller
 {
-    protected $defaultRelationships = array('tasks');
+    protected $defaultRelationships = array('tasks', 'followup_status', 'supervisors');
 
     /**
      * Display a listing of the resource.
@@ -19,8 +19,7 @@ class ObservationFollowupController extends Controller
      */
     public function index(Observation $observation)
     {
-        return $observation->followups()->with('tasks')->get()->toJson();
-
+        return $observation->followups()->with('tasks', 'followup_status', 'supervisors')->get()->toJson();
     }
 
     /**
@@ -32,7 +31,22 @@ class ObservationFollowupController extends Controller
      */
     public function store(Request $request, Observation $observation)
     {
-        return $observation->followups()->create($request->validate(['name' => 'required', 'description' => 'required']));
+        $request->validate([
+            'name' => 'required', 
+            'description' => 'required', 
+            'followup_status_id' => 'required', 
+            'supervisors_id' => 'required'
+        ]);
+
+        $followup = $observation->followups()->create($request->all());
+        
+        $supervisors = $request->input('supervisors_id');
+
+        $supervisors = array_column($supervisors, 'id');
+
+        $followup->supervisors()->sync($supervisors);
+
+        return $followup->load('supervisors');
     }
 
     /**
@@ -65,7 +79,22 @@ class ObservationFollowupController extends Controller
             abort (404);
         }
 
-        return $followup->update($request->validate(['name' => 'required', 'description' => 'required']));
+        $request->validate([
+            'name' => 'required', 
+            'description' => 'required', 
+            'followup_status_id' => 'required', 
+            'supervisors_id' => 'required'
+        ]);
+
+        $followup->update($request->all());
+        
+        $supervisors = $request->input('supervisors_id');
+
+        $supervisors = array_column($supervisors, 'id');
+
+        $followup->supervisors()->sync($supervisors);
+
+        return $followup->load($this->defaultRelationships);
     }
 
     /**
@@ -80,6 +109,8 @@ class ObservationFollowupController extends Controller
         if($followup->observation_id != $observation->id ) {
             abort (404);
         }
+
+        //TODO: handle soft deletion and nested deletion
 
         return $followup->delete();
     }

@@ -10,7 +10,7 @@ class ObservationController extends Controller
 {
     //TODO: verification and error
     //DRY
-    protected $defaultRelationships = array('codex', 'field_groups.fields');
+    protected $defaultRelationships = array('codex', 'field_groups.fields', 'followups.supervisors', 'followups.tasks.task_status', 'followups.tasks.operators', 'followups.followup_status');
 
     /**
      * Display a listing of the resource.
@@ -30,7 +30,7 @@ class ObservationController extends Controller
      */
     public function store(Request $request)
     {
-        return Observation::create(['name' => 'test', 'code' => '123', 'short_description' => 'none', 'description' => 'none', 'fine_amount'=> "Jusque 500€"]);
+        return Observation::create(['name' => 'test', 'codex_id' => '1', 'code' => '123', 'short_description' => 'none', 'description' => 'none', 'fine_amount'=> "Jusque 500€"]);
     }
 
     /**

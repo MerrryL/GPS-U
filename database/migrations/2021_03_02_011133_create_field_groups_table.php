@@ -20,6 +20,7 @@ class CreateFieldGroupsTable extends Migration
             $table->string('type');
             $table->string('logical_operator');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -55,16 +55,16 @@ class Constatation extends Model implements HasMedia
 
     public function observations()
     {
-        return $this->hasMany(Observation::class);
+        return $this->belongsToMany(Observation::class);
     }
 
     public function observers()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'constatation_observer');
     }
 
-    public function field_groups()
+    public function fields()
     {
-        return $this->hasMany(FieldGroup::class);
+        return $this->belongsToMany(Field::class);
     }
 }

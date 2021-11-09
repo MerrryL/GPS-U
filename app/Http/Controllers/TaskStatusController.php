@@ -14,7 +14,7 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        //
+        return TaskStatus::all()->toJson();
     }
 
     /**
