@@ -32,9 +32,9 @@ class ConstatationSeeder extends Seeder
             ->each(function ($constatation) {
                 $constatation->localization()->save(Localization::factory()->make());
 
-                $constatation->dossiers()->saveMany(Dossier::factory()->count(1)->make());
-                $constatation->actions()->saveMany(Action::Factory()->count(2)->make());
-                $constatation->observers()->saveMany([User::where('id', 1)->first()]);
+                //$constatation->dossiers()->saveMany(Dossier::factory()->count(1)->make());
+                //$constatation->actions()->saveMany(Action::Factory()->count(2)->make());
+                //$constatation->observers()->saveMany([User::where('id', 1)->first()]);
                 //$constatation->observations()->saveMany(Observation::Factory()->count(3)->make());
 
                 // $k = rand(1, 3);

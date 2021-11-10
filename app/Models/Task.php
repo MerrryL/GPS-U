@@ -25,4 +25,9 @@ class Task extends Model
     {
         return $this->belongsTo(TaskStatus::class);
     }
+
+    public function constatation()
+    {
+        return $this->belongsTo(Constatation::class);
+    }
 }

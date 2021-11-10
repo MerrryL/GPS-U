@@ -29,7 +29,7 @@ class PivotTables extends Migration
             $table->id();
             $table->foreignId('constatation_id')->constrained();
             $table->foreignId('field_id')->constrained();
-            $table->string('value');
+            $table->string('value')->nullable();
         });
 
         Schema::create('constatation_observer', function (Blueprint $table) {

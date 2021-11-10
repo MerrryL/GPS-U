@@ -63,8 +63,13 @@ class Constatation extends Model implements HasMedia
         return $this->belongsToMany(User::class, 'constatation_observer');
     }
 
+    public function followups()
+    {
+        return $this->hasMany(Followup::class);
+    }
+
     public function fields()
     {
-        return $this->belongsToMany(Field::class);
+        return $this->belongsToMany(Field::class)->withPivot('value');;
     }
 }

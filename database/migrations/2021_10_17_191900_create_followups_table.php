@@ -19,6 +19,7 @@ class CreateFollowupsTable extends Migration
             $table->string('description');
             $table->foreignId('followup_status_id')->nullable()->constrained();
             $table->foreignId('observation_id')->nullable()->constrained();
+            $table->foreignId('constatation_id')->nullable()->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

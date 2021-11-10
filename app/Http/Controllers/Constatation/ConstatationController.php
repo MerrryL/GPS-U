@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Constatation;
 use App\Models\Localization;
 
+use Illuminate\Support\Facades\Log;
+
 class ConstatationController extends Controller
 {
     //TODO: verification and error
     //DRY
-    protected $defaultRelationships = array('fields.field_groups', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+    protected $defaultRelationships = array('fields.field_group', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'observations.field_groups.fields', 'observations.followups.followup_status', 'observations.followups.supervisors', 'observations.followups.tasks.task_status','observations.followups.tasks.operators', 'media');
 
     /**
      * Display a listing of the resource.
@@ -42,11 +44,11 @@ class ConstatationController extends Controller
     public function store(Request $request)
     {
         //TODO: add features
-        $constat = Constatation::create();
+        $constatation = Constatation::create();
         $localization = Localization::create(['name' => 'at_creation']);
-        $constat->localization()->save($localization);
+        $constatation->localization()->save($localization);
 
-        return Constatation::where(['id' => $constat['id']])->with($this->defaultRelationships)->first();
+        return $constatation->load($this->defaultRelationships);
     }
 
     /**
@@ -69,10 +71,101 @@ class ConstatationController extends Controller
      */
     public function update(Request $request, Constatation $constatation)
     {
-        
         $constatation->update($request->validate([
             'description' => 'required',
+            'observers' => 'required',
+            'observations' => 'required'
         ]));
+
+        $observations = $request->input('observations');
+        $observations = array_column($observations, 'id');
+        $constatation->observations()->sync($observations);
+
+        $observations = $constatation->load($this->defaultRelationships)->observations;
+
+        //TODO: remove reliance on $this->defaultRelationships to preload the observations nested trees
+        //fields syncing
+        $fieldGroups = $observations->map( function ($observation)
+        {
+            if( $observation->field_groups->count() > 0 )
+            {
+                return $observation->field_groups;
+            }
+        })->collapse();
+        
+        $fields = $fieldGroups->map( function ($fieldGroup)
+        {
+                return $fieldGroup->fields;
+
+        })->collapse()->pluck('id');
+
+        $constatation->fields()->sync($fields);
+
+        //followups and tasks syncing
+        $followups = $observations->map( function ($observation)
+        {
+            if( $observation->followups->count() > 0 )
+            {
+                return $observation->followups;
+            }
+        })->collapse();
+
+
+
+
+
+        //return $tasks;
+
+        // $followups = $followups->map( function ($followup)
+        // {
+        //     return ['id' => $followup->id, 'followup' => $followup->replicate()];
+        // });
+        
+
+        // $constatation->followups()->saveMany($followups->pluck('followup'));
+        $followups = $followups->map( function ($followup)
+        {
+            return $followup->replicate(['observation_id']);
+        });
+        
+
+        $constatation->followups()->saveMany($followups);
+
+        $tasks = $followups->map( function ($followup)
+        {
+            $taskss = $followup->tasks;
+            $taskss = $taskss->map( function ($task)
+            {
+                    return $task->replicate();
+            });
+
+            $followup->tasks()->saveMany($taskss);
+            return $taskss;
+        })->collapse();
+
+        return $tasks;
+
+
+
+
+
+        return $followups;
+        $followups = $followups->map( function ($followup)
+        {
+            return null;
+
+        });
+
+        return $constatation->load('followups.tasks');
+
+
+
+
+        $observers = $request->input('observers');
+        $observers = array_column($observers, 'id');
+        $constatation->observers()->sync($observers);
+
+
 
         return $constatation->load($this->defaultRelationships);
     }

@@ -17,6 +17,11 @@ class Followup extends Model
         return $this->belongsTo(Observation::class);
     }
 
+    public function constatation()
+    {
+        return $this->belongsTo(Constatation::class);
+    }
+
     public function supervisors()
     {
         return $this->belongsToMany(User::class, 'followup_supervisor');
