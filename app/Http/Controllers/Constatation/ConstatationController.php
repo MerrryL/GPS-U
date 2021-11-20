@@ -13,7 +13,7 @@ class ConstatationController extends Controller
 {
     //TODO: verification and error
     //DRY
-    protected $defaultRelationships = array('fields.field_group', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'observations.field_groups.fields', 'observations.followups.followup_status', 'observations.followups.supervisors', 'observations.followups.tasks.task_status','observations.followups.tasks.operators', 'media');
+    protected $defaultRelationships = array('fields.field_group', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'observations.codex', 'observations.field_groups.fields', 'observations.followups.followup_status', 'observations.followups.supervisors', 'observations.followups.tasks.task_status','observations.followups.tasks.operators', 'media');
 
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class ConstatationController extends Controller
      */
     public function index()
     {
-        return Constatation::where(['modelType' => null])->with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -32,7 +32,7 @@ class ConstatationController extends Controller
      */
     public function getModels()
     {
-        return Constatation::where(['modelType' => 'model'])->with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
+        return Constatation::with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -101,7 +101,7 @@ class ConstatationController extends Controller
 
         $constatation->fields()->sync($fields);
 
-        //followups and tasks syncing
+        //followups syncing
         $followups = $observations->map( function ($observation)
         {
             if( $observation->followups->count() > 0 )
@@ -110,57 +110,43 @@ class ConstatationController extends Controller
             }
         })->collapse();
 
-
-
-
-
-        //return $tasks;
-
-        // $followups = $followups->map( function ($followup)
-        // {
-        //     return ['id' => $followup->id, 'followup' => $followup->replicate()];
-        // });
-        
-
-        // $constatation->followups()->saveMany($followups->pluck('followup'));
         $followups = $followups->map( function ($followup)
         {
             return $followup->replicate(['observation_id']);
         });
-        
 
         $constatation->followups()->saveMany($followups);
 
-        $tasks = $followups->map( function ($followup)
+        //tasks syncing
+        $replicatedTasks = $followups->map( function ($followup)
         {
-            $taskss = $followup->tasks;
-            $taskss = $taskss->map( function ($task)
+            $tasks = $followup->tasks;
+            $tasks = $tasks->map( function ($task)
             {
                     return $task->replicate();
             });
 
-            $followup->tasks()->saveMany($taskss);
-            return $taskss;
+            $followup->tasks()->saveMany($tasks);
+            return $tasks;
         })->collapse();
 
-        return $tasks;
-
-
-
-
-
-        return $followups;
-        $followups = $followups->map( function ($followup)
+        //images syncing
+        $images = $observations->map( function ($observation)
         {
-            return null;
+            if( $observation->images->count() > 0 )
+            {
+                return $observation->images;
+            }
+        })->collapse();
 
+        $images = $images->map( function ($image)
+        {
+            return $image->replicate(['observation_id']);
         });
 
-        return $constatation->load('followups.tasks');
+        $constatation->images()->saveMany($images);
 
-
-
-
+        //observers syncing
         $observers = $request->input('observers');
         $observers = array_column($observers, 'id');
         $constatation->observers()->sync($observers);

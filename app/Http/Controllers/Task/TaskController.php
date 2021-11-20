@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    //TODO: verification and error
+    //DRY
+    protected $defaultRelationships = array(
+        'operators',
+        'task_status',
+        'followup',
+    );
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        return Task::all()->load($this->defaultRelationships)->toJson();
     }
 
     /**

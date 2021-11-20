@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Constatation;
-use App\Http\Controllers\ObserverController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +75,56 @@ Route::group(['namespace' => 'Observation'], function () {
     });
 });
 
+
+Route::group(['namespace' => 'Followup'], function () {
+    Route::apiResources([
+        'followups' => 'FollowupController',
+    ]);
+    // Route::apiResources([
+    //     'observations.images' => 'ObservationImageController',
+    //     //'constatations.localization' => 'ConstatationLocalizationController',
+    //     'observations.codexes' => 'ObservationCodexController',
+    // ]);
+
+    // Route::group(['namespace' => 'FieldGroup'], function () {
+    //     Route::apiResources([
+    //         'observations.field_groups' => 'ObservationFieldGroupController',
+    //         'observations.field_groups.fields' => 'ObservationFieldGroupFieldController',
+    //     ]);
+    // });
+
+    // Route::group(['namespace' => 'Followup'], function () {
+    //     Route::apiResources([
+    //         'observations.followups' => 'ObservationFollowupController',
+    //         'observations.followups.tasks' => 'ObservationFollowupTaskController',
+    //     ]);
+    // });
+});
+
+Route::group(['namespace' => 'Task'], function () {
+    Route::apiResources([
+        'tasks' => 'TaskController',
+    ]);
+    // Route::apiResources([
+    //     'observations.images' => 'ObservationImageController',
+    //     //'constatations.localization' => 'ConstatationLocalizationController',
+    //     'observations.codexes' => 'ObservationCodexController',
+    // ]);
+
+    // Route::group(['namespace' => 'FieldGroup'], function () {
+    //     Route::apiResources([
+    //         'observations.field_groups' => 'ObservationFieldGroupController',
+    //         'observations.field_groups.fields' => 'ObservationFieldGroupFieldController',
+    //     ]);
+    // });
+
+    // Route::group(['namespace' => 'Followup'], function () {
+    //     Route::apiResources([
+    //         'observations.followups' => 'ObservationFollowupController',
+    //         'observations.followups.tasks' => 'ObservationFollowupTaskController',
+    //     ]);
+    // });
+});
 // Route::group(['namespace' => 'Followup'], function () {
 //     Route::apiResources([
 //         'followups' => 'FollowupController',

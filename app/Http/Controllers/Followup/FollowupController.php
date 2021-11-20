@@ -1,13 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Followup;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Followup;
 
+
 class FollowupController extends Controller
 {
+    //TODO: verification and error
+    //DRY
+    protected $defaultRelationships = array(
+        'followup_status', 
+        'tasks.operators',
+        'tasks.task_status',
+        'supervisors',
+        'constatation',
+    );
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,7 @@ class FollowupController extends Controller
      */
     public function index()
     {
-        //
+        return Followup::where('observation_id', null)->with($this->defaultRelationships)->get()->toJson();
     }
 
     /**
