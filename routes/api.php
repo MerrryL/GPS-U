@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Constatation;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +43,7 @@ Route::group(['namespace' => 'Constatation'], function () {
     Route::get('/constatations/{constatation}/images/{image}/defineAsThumb', [ConstatationImageController::class, 'defineAsThumb']);
     Route::post('/constatations/{constatation}/images/{image}/upload', [ConstatationImageController::class, 'upload']);
     Route::delete('/constatations/{constatation}/images/{image}/remove', [ConstatationImageController::class, 'remove']);
+    Route::post('/constatations/{constatation}/images/upload', [ConstatationImageController::class, 'create_and_upload']);
 
     Route::get('/options', [ConstatationController::class, 'getModels']);
 
@@ -179,6 +180,7 @@ Route::group(['namespace' => 'Dossier'], function () {
 
 Route::apiResources([
     'supervisors' => 'SupervisorController',
+    'field_types' => 'FieldTypeController',
     'codexes' => 'CodexController',
     'observers' => 'ObserverController',
     'operators' => 'OperatorController',

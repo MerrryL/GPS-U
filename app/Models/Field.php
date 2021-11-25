@@ -10,7 +10,12 @@ class Field extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['name', 'type', 'value', 'isDefault'];
+    protected $fillable= ['name', 'options', 'type', 'default_value', 'is_required'];
+
+    public function field_type()
+    {
+        return $this->belongsTo(FieldType::class);
+    }
 
     public function field_group()
     {

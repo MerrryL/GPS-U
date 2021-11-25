@@ -16,8 +16,11 @@ class CreateFieldsTable extends Migration
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('type');
-            $table->boolean('isDefault');
+            // $table->string('type');
+            $table->json('options')->nullable();
+            $table->string('defaultValue')->nullable();
+            $table->boolean('isRequired')->nullable();
+            $table->foreignId('field_type_id')->constrained();
             $table->foreignId('field_group_id')->constrained();
             $table->timestamps();
             $table->softDeletes();

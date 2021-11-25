@@ -113,11 +113,52 @@ class ConstatationImageController extends Controller
             $imagePath = $image->getFirstMedia('image')->getPath();
             $constatation->addMedia($imagePath)->preservingOriginal()->toMediaCollection('image');
 
-            return $constatation->load('field_groups.fields', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+            //TODO: fix this here
+
+            return $constatation->load('localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
         }
 
         return $image->load('media');
     }
+
+        /**
+     * Upload an image in storage.
+     *
+     * @param  \App\Models\Constatation  $constatation
+     * @param  \App\Models\Image  $image
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function create_and_upload(Request $request, Constatation $constatation)
+    {
+
+        $validated = $request->validate([
+            'image' => 'required',
+            'image.base64' => 'required|base64mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $filename = md5(time()) . '.jpg';
+        Storage::disk('images')->put($filename, base64_decode($validated['image']['base64']));
+        $path = Storage::disk('images')->url($filename);
+
+        $image = $constatation->images()->create(['name'=> "Autres", 'description' => "Image supplémentaire"]);
+
+        $image->addMedia('images/' . $filename)->toMediaCollection('image');
+
+        if($constatation->getMedia('image')->count() == 0)
+        {
+            $imagePath = $image->getFirstMedia('image')->getPath();
+            $constatation->addMedia($imagePath)->preservingOriginal()->toMediaCollection('image');
+
+            //TODO: fix this here
+
+            return $constatation->load('localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+        }
+
+        return $image->load('media');
+    }
+
+
 
     /**
      * Remove the media of an image in storage.
@@ -173,6 +214,6 @@ class ConstatationImageController extends Controller
         $constatation->clearMediaCollection('image');
         $constatation->addMedia($imagePath)->preservingOriginal()->toMediaCollection('image');
 
-        return $constatation->load('field_groups.fields', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+        return $constatation->load('fields', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
     }
 }

@@ -79,6 +79,9 @@ class ConstatationController extends Controller
 
         $observations = $request->input('observations');
         $observations = array_column($observations, 'id');
+
+
+        
         $constatation->observations()->sync($observations);
 
         $observations = $constatation->load($this->defaultRelationships)->observations;
