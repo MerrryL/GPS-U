@@ -22,7 +22,7 @@ class ObservationFieldGroupFieldController extends Controller
             abort (404);
         }
 
-        return $fieldGroup->fields()->get->toJson();
+        return $fieldGroup->fields()->get()->toJson();
     }
 
     /**
@@ -37,7 +37,12 @@ class ObservationFieldGroupFieldController extends Controller
         if($fieldGroup->observation_id != $observation->id ) {
             abort (404);
         }
-        return $fieldGroup->fields()->create($request->validate(['name' => 'required', 'type' => 'required', 'isDefault' => 'required']));
+
+        return $fieldGroup->fields()->create($request->validate([
+            'name' => 'required',
+            'isRequired' => 'required', 
+            'defaultValue' => 'nullable'
+        ]));
     }
 
     /**
@@ -78,7 +83,7 @@ class ObservationFieldGroupFieldController extends Controller
             abort (404);
         }
 
-        return $field->update($request->validate(['name' => 'required', 'type' => 'required', 'isDefault' => 'required']));
+        return $field->update($request->validate(['name' => 'required', 'isDefault' => 'required', 'defaultValue' => 'nullable']));
     }
 
     /**

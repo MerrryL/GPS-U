@@ -18,7 +18,7 @@ class ConstatationImageController extends Controller
      */
     public function index(Constatation $constatation)
     {
-        return $constatation->images()->with('media')->get()->toJson();
+        return $constatation->images()->with('media', 'image_request')->get()->toJson();
     }
 
     /**

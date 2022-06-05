@@ -31,13 +31,9 @@ class Observation extends Model
         return $this->belongsTo(Codex::class);
     }
 
-    public function images()
+     public function image_requests()
     {
-        return $this->hasMany(Image::class);
+        return $this->belongsToMany (ImageRequest::class);
     }
 
-    public function followups()
-    {
-        return $this->hasMany(Followup::class);
-    }
 }

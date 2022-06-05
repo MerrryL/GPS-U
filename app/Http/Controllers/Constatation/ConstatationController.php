@@ -13,7 +13,7 @@ class ConstatationController extends Controller
 {
     //TODO: verification and error
     //DRY
-    protected $defaultRelationships = array('fields.field_group', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'observations.codex', 'observations.field_groups.fields', 'observations.followups.followup_status', 'observations.followups.supervisors', 'observations.followups.tasks.task_status','observations.followups.tasks.operators', 'media');
+    protected $defaultRelationships = array('fields.field_group', 'localization', 'images.media', 'images.image_request', 'observers', 'observations.codex', 'observations.field_groups.fields', 'media');
 
     /**
      * Display a listing of the resource.
@@ -21,16 +21,6 @@ class ConstatationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return Constatation::with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
-    }
-
-    /**
-     * Some constatations are only models to "create from".
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getModels()
     {
         return Constatation::with($this->defaultRelationships)->orderBy('id', 'desc')->get()->toJson(JSON_PRETTY_PRINT);
     }

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Http\Controllers\LoginController;
 
+use App\Http\Controllers\ObservationTypeController;
+use App\Http\Controllers\Constatation\ConstatationImageController;
+use App\Http\Controllers\Observation\ObservationImageRequestController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -41,14 +46,10 @@ Route::group(['namespace' => 'Constatation'], function () {
     
     // ConstatationImage related supplementary routes
     Route::get('/constatations/{constatation}/images/{image}/defineAsThumb', [ConstatationImageController::class, 'defineAsThumb']);
-    Route::post('/constatations/{constatation}/images/{image}/upload', [ConstatationImageController::class, 'upload']);
+    Route::post('/constatations/{constatation}/images/{image}/upload', [ ConstatationImageController::class, 'upload']);
     Route::delete('/constatations/{constatation}/images/{image}/remove', [ConstatationImageController::class, 'remove']);
     Route::post('/constatations/{constatation}/images/upload', [ConstatationImageController::class, 'create_and_upload']);
-
-    Route::get('/options', [ConstatationController::class, 'getModels']);
-
 });
-
 
 
 Route::group(['namespace' => 'Observation'], function () {
@@ -56,10 +57,10 @@ Route::group(['namespace' => 'Observation'], function () {
         'observations' => 'ObservationController',
     ]);
     Route::apiResources([
-        'observations.images' => 'ObservationImageController',
-        //'constatations.localization' => 'ConstatationLocalizationController',
+        'observations.image_requests' => 'ObservationImageRequestController',
         'observations.codexes' => 'ObservationCodexController',
     ]);
+    Route::post('/observations/{observation}/image_requests/{image_request}/attach', [ ObservationImageRequestController::class, 'attach']);
 
     Route::group(['namespace' => 'FieldGroup'], function () {
         Route::apiResources([
@@ -68,102 +69,12 @@ Route::group(['namespace' => 'Observation'], function () {
         ]);
     });
 
-    Route::group(['namespace' => 'Followup'], function () {
-        Route::apiResources([
-            'observations.followups' => 'ObservationFollowupController',
-            'observations.followups.tasks' => 'ObservationFollowupTaskController',
-        ]);
-    });
 });
 
-
-Route::group(['namespace' => 'Followup'], function () {
-    Route::apiResources([
-        'followups' => 'FollowupController',
-    ]);
-    // Route::apiResources([
-    //     'observations.images' => 'ObservationImageController',
-    //     //'constatations.localization' => 'ConstatationLocalizationController',
-    //     'observations.codexes' => 'ObservationCodexController',
-    // ]);
-
-    // Route::group(['namespace' => 'FieldGroup'], function () {
-    //     Route::apiResources([
-    //         'observations.field_groups' => 'ObservationFieldGroupController',
-    //         'observations.field_groups.fields' => 'ObservationFieldGroupFieldController',
-    //     ]);
-    // });
-
-    // Route::group(['namespace' => 'Followup'], function () {
-    //     Route::apiResources([
-    //         'observations.followups' => 'ObservationFollowupController',
-    //         'observations.followups.tasks' => 'ObservationFollowupTaskController',
-    //     ]);
-    // });
-});
-
-Route::group(['namespace' => 'Task'], function () {
-    Route::apiResources([
-        'tasks' => 'TaskController',
-    ]);
-    // Route::apiResources([
-    //     'observations.images' => 'ObservationImageController',
-    //     //'constatations.localization' => 'ConstatationLocalizationController',
-    //     'observations.codexes' => 'ObservationCodexController',
-    // ]);
-
-    // Route::group(['namespace' => 'FieldGroup'], function () {
-    //     Route::apiResources([
-    //         'observations.field_groups' => 'ObservationFieldGroupController',
-    //         'observations.field_groups.fields' => 'ObservationFieldGroupFieldController',
-    //     ]);
-    // });
-
-    // Route::group(['namespace' => 'Followup'], function () {
-    //     Route::apiResources([
-    //         'observations.followups' => 'ObservationFollowupController',
-    //         'observations.followups.tasks' => 'ObservationFollowupTaskController',
-    //     ]);
-    // });
-});
-// Route::group(['namespace' => 'Followup'], function () {
-//     Route::apiResources([
-//         'followups' => 'FollowupController',
-//     ]);
-//     Route::apiResources([
-//         'followups.tasks' => 'FollowupTaskController',
-//         //'constatations.images' => 'ConstatationImageController',
-//         //'constatations.localization' => 'ConstatationLocalizationController',
-//         //'constatations.codexes' => 'ConstatationCodexController',
-//     ]);
-
-// });
-
-// Route::group(['namespace' => 'Task'], function () {
-//     Route::apiResources([
-//         'tasks' => 'TaskController',
-//     ]);
-//     Route::apiResources([
-//         //'followups.tasks' => 'FollowupTaskController',
-//         //'constatations.images' => 'ConstatationImageController',
-//         //'constatations.localization' => 'ConstatationLocalizationController',
-//         //'constatations.codexes' => 'ConstatationCodexController',
-//     ]);
-
-// });
-
-Route::group(['namespace' => 'Dossier'], function () {
-    Route::apiResources([
-        'dossiers' => 'DossierController',
-    ]);
-    Route::apiResources([
-        //'followups.tasks' => 'FollowupTaskController',
-        //'constatations.images' => 'ConstatationImageController',
-        //'constatations.localization' => 'ConstatationLocalizationController',
-        //'constatations.codexes' => 'ConstatationCodexController',
-    ]);
-
-});
+Route::apiResources([
+    'observation_types' => "ObservationTypeController",
+    'image_requests' => 'ImageRequestController'
+]);
 
 //TODO: these are opened for now for dev purposes, remove those not needed
 // Route::apiResources([
@@ -179,13 +90,10 @@ Route::group(['namespace' => 'Dossier'], function () {
 // ]);
 
 Route::apiResources([
-    'supervisors' => 'SupervisorController',
     'field_types' => 'FieldTypeController',
     'codexes' => 'CodexController',
     'observers' => 'ObserverController',
     'operators' => 'OperatorController',
-    'followup_status' => 'FollowupStatusController',
-    'task_status' => 'TaskStatusController'
 ]);
 
 //Geocoding routes

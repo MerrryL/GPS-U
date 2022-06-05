@@ -16,7 +16,6 @@ class Constatation extends Model implements HasMedia
 
     protected $fillable = ['description'];
 
-
     public function registerMediaCollections(): void
     {
         $this
@@ -33,19 +32,9 @@ class Constatation extends Model implements HasMedia
             ->sharpen(10);
     }
 
-    public function dossiers()
-    {
-        return $this->belongsToMany(Dossier::class);
-    }
-
     public function localization()
     {
         return $this->hasOne(Localization::class);
-    }
-
-    public function actions()
-    {
-        return $this->belongsToMany(Action::class);
     }
 
     public function images()
@@ -61,11 +50,6 @@ class Constatation extends Model implements HasMedia
     public function observers()
     {
         return $this->belongsToMany(User::class, 'constatation_observer');
-    }
-
-    public function followups()
-    {
-        return $this->hasMany(Followup::class);
     }
 
     public function fields()

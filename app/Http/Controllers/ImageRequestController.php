@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FieldType;
+use App\Models\ImageRequest;
 use Illuminate\Http\Request;
 
-class FieldTypeController extends Controller
+class ImageRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class FieldTypeController extends Controller
      */
     public function index()
     {
-        return FieldType::all();
+        return ImageRequest::all()->toJson();
     }
 
     /**
@@ -31,10 +31,10 @@ class FieldTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\ImageRequest  $ImageRequest
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ImageRequest $imageRequest)
     {
         //
     }
@@ -43,10 +43,10 @@ class FieldTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\ImageRequest  $ImageRequest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ImageRequest $imageRequest)
     {
         //
     }
@@ -54,10 +54,10 @@ class FieldTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\ImageRequest  $ImageRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ImageRequest $imageRequest)
     {
         //
     }

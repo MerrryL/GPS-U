@@ -30,7 +30,7 @@ class ObservationFieldGroupController extends Controller
      */
     public function store(Request $request, Observation $observation)
     {
-        return $observation->field_groups()->create($request->validate(['name' => 'required', 'type' => 'required', 'logical_operator' => 'required']));
+        return $observation->field_groups()->create($request->validate(['name' => 'required', 'type' => 'required']));
     }
 
     /**
@@ -63,7 +63,7 @@ class ObservationFieldGroupController extends Controller
             abort (404);
         }
 
-        return $fieldGroup->update($request->validate(['name' => 'required', 'type' => 'required', 'logical_operator' => 'required']));
+        return $fieldGroup->update($request->validate(['name' => 'required', 'type' => 'required']));
     }
 
     /**

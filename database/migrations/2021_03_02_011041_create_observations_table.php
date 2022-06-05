@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateObservationsTable extends Migration
 {
@@ -25,6 +26,24 @@ class CreateObservationsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        DB::table('observations')->insert(
+            [[ 
+                'code' => '175-176',
+                'name' => 'Poubelles',
+                'description' => 'Article réglementant les heures de collecte des sacs poubelles.',
+                'short_description' => 'Article réglementant les heures de collecte des sacs poubelles.',
+                'fine_amount' => 'Jusqu\'à 350€',
+            ],
+            [ 
+                'code' => '181',
+                'name' => 'PMC',
+                'description' => 'Article réglementant les heures de collecte des sacs PMC.',
+                'short_description' => 'Article réglementant les heures de collecte des sacs PMC.',
+                'fine_amount' => 'Jusqu\'à 350€',
+            ],
+            ]
+        );
     }
 
     /**

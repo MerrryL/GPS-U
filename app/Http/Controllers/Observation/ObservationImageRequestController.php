@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Observation;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
+use App\Models\ImageRequest;
 use App\Models\Observation;
 use Illuminate\Http\Request;
 
-class ObservationImageController extends Controller
+class ObservationImageRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class ObservationImageController extends Controller
      */
     public function index(Observation $observation)
     {
-        return $observation->images()->get()->toJson();
+        return $observation->image_requests()->get()->toJson();
     }
 
     /**
@@ -29,7 +29,7 @@ class ObservationImageController extends Controller
      */
     public function store(Request $request, Observation $observation)
     {
-        return $observation->images()->create($request->validate(['name' => 'required']));
+        return $observation->image_requests()->create($request->validate(['name' => 'required', 'description' => 'required']));
     }
 
     /**
@@ -39,13 +39,13 @@ class ObservationImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function show(Observation $observation, Image $image)
+    public function show(Observation $observation, ImageRequest $imageRequest)
     {
-        if($image->observation_id != $observation->id ) {
+        if($imageRequest->observation_id != $observation->id ) {
             abort (404);
         }
 
-        return $image;
+        return $imageRequest;
     }
 
     /**
@@ -56,13 +56,26 @@ class ObservationImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Observation $observation, Image $image)
+    public function update(Request $request, Observation $observation, ImageRequest $imageRequest)
     {
-        if($image->observation_id != $observation->id ) {
+        if($imageRequest->observation_id != $observation->id ) {
             abort (404);
         }
 
-        return $image->update($request->validate(['name' => 'required']));
+        return $imageRequest->update($request->validate(['name' => 'required', 'description' => 'required']));
+    }
+
+    /**
+     * Attach an image request to an observation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Observation  $observation
+     * @param  \App\Models\Image  $image
+     * @return \Illuminate\Http\Response
+     */
+    public function attach(Request $request, Observation $observation, ImageRequest $imageRequest)
+    {
+        return $observation->image_requests()->attach($imageRequest);
     }
 
     /**
@@ -72,12 +85,12 @@ class ObservationImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Observation $observation, Image $image)
+    public function destroy(Observation $observation, ImageRequest $imageRequest)
     {
-        if($image->observation_id != $observation->id ) {
+        if($imageRequest->observation_id != $observation->id ) {
             abort (404);
         }
 
-        return $image->delete();
+        return $imageRequest->delete();
     }
 }

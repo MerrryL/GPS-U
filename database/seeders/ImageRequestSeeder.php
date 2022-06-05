@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class TaskSeeder extends Seeder
+class ImageRequestSeeder extends Seeder
 {
     /**
      * Run the database seeds.

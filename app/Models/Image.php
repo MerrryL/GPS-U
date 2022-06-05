@@ -20,9 +20,9 @@ class Image extends Model implements HasMedia
         return $this->belongsTo(Constatation::class);
     }
 
-    public function observation()
+     public function image_request()
     {
-        return $this->belongsTo(Observation::class);
+        return $this->belongsTo(ImageRequest::class);
     }
 
     public function registerMediaCollections(): void

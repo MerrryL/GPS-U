@@ -10,7 +10,7 @@ class ObservationController extends Controller
 {
     //TODO: verification and error
     //DRY
-    protected $defaultRelationships = array('codex', 'field_groups.fields', 'followups.supervisors', 'followups.tasks.task_status', 'followups.tasks.operators', 'followups.followup_status');
+    protected $defaultRelationships = array('codex','image_requests', 'field_groups.fields');
 
     /**
      * Display a listing of the resource.

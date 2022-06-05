@@ -13,12 +13,6 @@ class PivotTables extends Migration
      */
     public function up()
     {
-        Schema::create('constatation_dossier', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('constatation_id')->constrained();
-            $table->foreignId('dossier_id')->constrained();
-        });
-
         Schema::create('constatation_observation', function (Blueprint $table) {
             $table->id();
             $table->foreignId('constatation_id')->constrained();
@@ -38,34 +32,10 @@ class PivotTables extends Migration
             $table->foreignId('user_id')->constrained();
         });
 
-        Schema::create('action_constatation', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('action_id')->constrained();
-            $table->foreignId('constatation_id')->constrained();
-        });
-
-        Schema::create('observation_image', function (Blueprint $table) {
+        Schema::create('image_request_observation', function (Blueprint $table) {
             $table->id();
             $table->foreignId('observation_id')->constrained();
-            $table->foreignId('image_id')->constrained();
-        });
-
-        Schema::create('followup_supervisor', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('followup_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-        });
-        
-        Schema::create('task_operator', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('task_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-        });
-        
-        Schema::create('followup_task', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('followup_id')->constrained();
-            $table->foreignId('task_id')->constrained();
+            $table->foreignId('image_request_id')->constrained();
         });
 
     }

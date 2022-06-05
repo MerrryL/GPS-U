@@ -20,7 +20,7 @@ class CreateFieldsTable extends Migration
             $table->json('options')->nullable();
             $table->string('defaultValue')->nullable();
             $table->boolean('isRequired')->nullable();
-            $table->foreignId('field_type_id')->constrained();
+            // $table->foreignId('field_type_id')->constrained();
             $table->foreignId('field_group_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
