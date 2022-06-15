@@ -30,7 +30,7 @@ class ConstatationImageController extends Controller
      */
     public function store(Request $request, Constatation $constatation)
     {
-        return $constatation->images()->create($request->validate(['name' => 'required']));
+        return $constatation->images()->create($request->validate([]));
     }
 
     /**
@@ -63,7 +63,7 @@ class ConstatationImageController extends Controller
             abort (404);
         }
 
-        return $image->update($request->validate(['name' => 'required']));
+        return $image->update($request->validate([]));
     }
 
     /**
@@ -115,7 +115,7 @@ class ConstatationImageController extends Controller
 
             //TODO: fix this here
 
-            return $constatation->load('localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+            return $constatation->load('localization', 'images.media', 'observers', 'media');
         }
 
         return $image->load('media');
@@ -141,7 +141,7 @@ class ConstatationImageController extends Controller
         Storage::disk('images')->put($filename, base64_decode($validated['image']['base64']));
         $path = Storage::disk('images')->url($filename);
 
-        $image = $constatation->images()->create(['name'=> "Autres", 'description' => "Image supplémentaire"]);
+        $image = $constatation->images()->create();
 
         $image->addMedia('images/' . $filename)->toMediaCollection('image');
 
@@ -152,7 +152,7 @@ class ConstatationImageController extends Controller
 
             //TODO: fix this here
 
-            return $constatation->load('localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+            return $constatation->load('localization', 'images.media', 'observers', 'media');
         }
 
         return $image->load('media');
@@ -214,6 +214,6 @@ class ConstatationImageController extends Controller
         $constatation->clearMediaCollection('image');
         $constatation->addMedia($imagePath)->preservingOriginal()->toMediaCollection('image');
 
-        return $constatation->load('fields', 'localization', 'dossiers', 'actions', 'images.media', 'observers', 'media');
+        return $constatation->load('fields', 'localization', 'images.media', 'observers', 'media');
     }
 }

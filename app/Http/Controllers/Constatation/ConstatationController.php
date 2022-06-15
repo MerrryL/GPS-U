@@ -13,7 +13,7 @@ class ConstatationController extends Controller
 {
     //TODO: verification and error
     //DRY
-    protected $defaultRelationships = array('fields.field_group', 'localization', 'images.media', 'images.image_request', 'observers', 'observations.codex', 'observations.field_groups.fields', 'media');
+    protected $defaultRelationships = array('fields.field_group.observation', 'localization', 'images.media', 'images.image_request', 'observers', 'observations.codex', 'observations.field_groups.fields', 'media');
 
     /**
      * Display a listing of the resource.
@@ -69,15 +69,10 @@ class ConstatationController extends Controller
 
         $observations = $request->input('observations');
         $observations = array_column($observations, 'id');
-
-
-        
         $constatation->observations()->sync($observations);
 
-        $observations = $constatation->load($this->defaultRelationships)->observations;
-
-        //TODO: remove reliance on $this->defaultRelationships to preload the observations nested trees
         //fields syncing
+        $observations = $constatation->load($this->defaultRelationships)->observations;
         $fieldGroups = $observations->map( function ($observation)
         {
             if( $observation->field_groups->count() > 0 )
@@ -92,59 +87,23 @@ class ConstatationController extends Controller
 
         })->collapse()->pluck('id');
 
-        $constatation->fields()->sync($fields);
-
-        //followups syncing
-        $followups = $observations->map( function ($observation)
-        {
-            if( $observation->followups->count() > 0 )
-            {
-                return $observation->followups;
-            }
-        })->collapse();
-
-        $followups = $followups->map( function ($followup)
-        {
-            return $followup->replicate(['observation_id']);
-        });
-
-        $constatation->followups()->saveMany($followups);
-
-        //tasks syncing
-        $replicatedTasks = $followups->map( function ($followup)
-        {
-            $tasks = $followup->tasks;
-            $tasks = $tasks->map( function ($task)
-            {
-                    return $task->replicate();
-            });
-
-            $followup->tasks()->saveMany($tasks);
-            return $tasks;
-        })->collapse();
+        $constatation->fields()->syncWithPivotValues($fields, ['value' => '']);
 
         //images syncing
-        $images = $observations->map( function ($observation)
+        $image_requests = $observations->map( function ($observation)
         {
-            if( $observation->images->count() > 0 )
+            if( $observation->image_requests->count() > 0 )
             {
-                return $observation->images;
+                return $observation->image_requests;
             }
-        })->collapse();
+        })->collapse()->pluck('id');
 
-        $images = $images->map( function ($image)
-        {
-            return $image->replicate(['observation_id']);
-        });
-
-        $constatation->images()->saveMany($images);
+        $constatation->image_requests()->sync($image_requests);
 
         //observers syncing
         $observers = $request->input('observers');
         $observers = array_column($observers, 'id');
         $constatation->observers()->sync($observers);
-
-
 
         return $constatation->load($this->defaultRelationships);
     }

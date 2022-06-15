@@ -83,7 +83,7 @@ class ObservationFieldGroupFieldController extends Controller
             abort (404);
         }
 
-        return $field->update($request->validate(['name' => 'required', 'isDefault' => 'required', 'defaultValue' => 'nullable']));
+        return $field->update($request->validate(['name' => 'required', 'isRequired' => 'required', 'defaultValue' => 'nullable']));
     }
 
     /**
