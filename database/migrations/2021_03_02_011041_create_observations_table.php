@@ -34,6 +34,9 @@ class CreateObservationsTable extends Migration
                 'description' => 'Article réglementant les heures de collecte des sacs poubelles.',
                 'short_description' => 'Article réglementant les heures de collecte des sacs poubelles.',
                 'fine_amount' => 'Jusqu\'à 350€',
+                'codex_id' => 1,
+                'observation_type_id' => 1,
+                'created_at' => now(),
             ],
             [ 
                 'code' => '181',
@@ -41,6 +44,10 @@ class CreateObservationsTable extends Migration
                 'description' => 'Article réglementant les heures de collecte des sacs PMC.',
                 'short_description' => 'Article réglementant les heures de collecte des sacs PMC.',
                 'fine_amount' => 'Jusqu\'à 350€',
+                'codex_id' => 1,
+                'observation_type_id' => 1,
+                'created_at' => now(),
+
             ],
             ]
         );
