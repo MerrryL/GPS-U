@@ -42,6 +42,11 @@ class Constatation extends Model implements HasMedia
         return $this->hasMany(Image::class);
     }
 
+    public function image_requests()
+    {
+        return $this->belongsToMany(ImageRequest::class,'images');
+    }
+
     public function observations()
     {
         return $this->belongsToMany(Observation::class);
@@ -54,6 +59,6 @@ class Constatation extends Model implements HasMedia
 
     public function fields()
     {
-        return $this->belongsToMany(Field::class)->withPivot('value');;
+        return $this->belongsToMany(Field::class)->withPivot('value');
     }
 }

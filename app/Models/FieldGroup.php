@@ -9,7 +9,7 @@ class FieldGroup extends Model
 {
     use HasFactory;
 
-    public $fillable = ['name', 'type'];
+    public $fillable = ['name', 'description'];
 
     public function observation()
     {

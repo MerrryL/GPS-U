@@ -18,7 +18,6 @@ class CreateFieldGroupsTable extends Migration
             $table->foreignId('observation_id')->nullable()->constrained();
             $table->string('name');
             $table->string('description');
-            // $table->string('logical_operator');
             $table->timestamps();
             $table->softDeletes();
         });

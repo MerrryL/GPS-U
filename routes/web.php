@@ -37,7 +37,6 @@ Route::get('login', [AuthenticatedSessionController::class, 'create'])
 
 /*Route::resources([
     'constatation' => ConstatationController::class,
-    'dossier' => DossierController::class,
     'image' => ImageController::class,
     'localization' => LocalizationController::class,
     'observation' => ObservationController::class,

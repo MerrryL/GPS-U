@@ -9,7 +9,7 @@ class Field extends Model
 {
     use HasFactory;
 
-    protected $fillable= ['name', 'options', 'default_value', 'is_required'];
+    protected $fillable= ['name','defaultValue', 'isRequired'];
 
     public function field_group()
     {

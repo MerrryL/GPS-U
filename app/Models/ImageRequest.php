@@ -20,4 +20,9 @@ class ImageRequest extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function constatations()
+    {
+        return $this->belongsToMany(Constatation::class,'images');
+    }
 }

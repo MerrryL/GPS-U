@@ -68,7 +68,6 @@ Route::group(['namespace' => 'Observation'], function () {
             'observations.field_groups.fields' => 'ObservationFieldGroupFieldController',
         ]);
     });
-
 });
 
 Route::apiResources([
@@ -78,7 +77,6 @@ Route::apiResources([
 
 //TODO: these are opened for now for dev purposes, remove those not needed
 // Route::apiResources([
-//     'dossiers' => 'DossierController',
 //     'images' => 'ImageController',
 //     'followups' => 'FollowupController',
 //     'observations' => 'ObservationController',

@@ -45,11 +45,11 @@ class ConstatationLocalizationController extends Controller
             'viewport' => 'nullable',
         ]);
 
-        return ["test", $validated];
+        // return ["test", $validated];
 
-        $localization = Localization::create($request->all());
+        // $localization = Localization::create($request->all());
 
-        $constatation->localization()->save($localization);
+        $constatation->localization()->update($request->all());
         
         return $constatation->localization()->get()->toJson();
     }
