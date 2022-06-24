@@ -33,10 +33,52 @@ class ConstatationController extends Controller
      */
     public function store(Request $request)
     {
-        //TODO: add features
-        $constatation = Constatation::create();
-        $localization = Localization::create(['name' => 'at_creation']);
+        $constatation = Constatation::create($request->validate([
+            'description' => 'required',
+            'observers' => 'required',
+            'observations' => 'required'
+        ]));
+
+        $localization = Localization::create(['name' => 'at_creation', 'given_name' => '', 'formatted_address' => '']);
         $constatation->localization()->save($localization);
+
+        $observations = $request->input('observations');
+        $observations = array_column($observations, 'id');
+        $constatation->observations()->sync($observations);
+
+        //fields syncing
+        $observations = $constatation->load($this->defaultRelationships)->observations;
+        $fieldGroups = $observations->map( function ($observation)
+        {
+            if( $observation->field_groups->count() > 0 )
+            {
+                return $observation->field_groups;
+            }
+        })->collapse();
+        
+        $fields = $fieldGroups->map( function ($fieldGroup)
+        {
+                return $fieldGroup->fields;
+
+        })->collapse()->pluck('id');
+
+        $constatation->fields()->syncWithPivotValues($fields, ['value' => '']);
+
+        //images syncing
+        $image_requests = $observations->map( function ($observation)
+        {
+            if( $observation->image_requests->count() > 0 )
+            {
+                return $observation->image_requests;
+            }
+        })->collapse()->pluck('id');
+
+        $constatation->image_requests()->sync($image_requests);
+
+        //observers syncing
+        $observers = $request->input('observers');
+        $observers = array_column($observers, 'id');
+        $constatation->observers()->sync($observers);
 
         return $constatation->load($this->defaultRelationships);
     }
@@ -115,8 +157,8 @@ class ConstatationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function require_validation(Constatation $constatation){
-        $constatation->requiresValidation=true;
-        $constatation->requiresValidationDate=now();
+        $constatation->requires_validation=true;
+        $constatation->requires_validation_date=now();
 
         $constatation->save();
 
@@ -130,8 +172,8 @@ class ConstatationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function refuse_validation(Constatation $constatation){
-        $constatation->requiresValidation=false;
-        $constatation->requiresValidationDate= null;
+        $constatation->requires_validation=false;
+        $constatation->requires_validation_date= null;
 
         $constatation->save();
 
@@ -145,10 +187,10 @@ class ConstatationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function validate_constatation(Constatation $constatation){
-        $constatation->requiresValidation=false;
-        $constatation->requiresValidationDate=null;
-        $constatation->isValidated=true;
-        $constatation->validationDate= now();
+        $constatation->requires_validation=false;
+        $constatation->requires_validation_date=null;
+        $constatation->is_validated=true;
+        $constatation->validation_date= now();
         $constatation->save();
 
         return $constatation->load($this->defaultRelationships);

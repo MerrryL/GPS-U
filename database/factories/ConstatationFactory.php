@@ -26,10 +26,10 @@ class ConstatationFactory extends Factory
     {
         return [
             'description' => $this->faker->text,
-            'isValidated' => $this->faker->boolean,
-            'validationDate' => $this->faker->dateTime($max = 'now', $timezone = null),
-            'requiresValidation' => $this->faker->boolean,
-            'requiresValidationDate' => $this->faker->dateTime($max = 'now', $timezone = null)
+            'is_validated' => $this->faker->boolean,
+            'validation_date' => $this->faker->dateTime($max = 'now', $timezone = null),
+            'requires_validation' => $this->faker->boolean,
+            'requires_validation_date' => $this->faker->dateTime($max = 'now', $timezone = null)
         ];
     }
 }

@@ -40,8 +40,8 @@ class ObservationFieldGroupFieldController extends Controller
 
         return $fieldGroup->fields()->create($request->validate([
             'name' => 'required',
-            'isRequired' => 'required', 
-            'defaultValue' => 'nullable'
+            'is_required' => 'required', 
+            'default_value' => 'nullable'
         ]));
     }
 
@@ -83,7 +83,7 @@ class ObservationFieldGroupFieldController extends Controller
             abort (404);
         }
 
-        return $field->update($request->validate(['name' => 'required', 'isRequired' => 'required', 'defaultValue' => 'nullable']));
+        return $field->update($request->validate(['name' => 'required', 'is_required' => 'required', 'default_value' => 'nullable']));
     }
 
     /**

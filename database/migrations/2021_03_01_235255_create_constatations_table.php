@@ -24,10 +24,10 @@ class CreateConstatationsTable extends Migration
         Schema::create('constatations', function (Blueprint $table) {
             $table->id();
             $table->string('description')->nullable();
-            $table->boolean('isValidated')->default(false);
-            $table->date('validationDate')->nullable();
-            $table->boolean('requiresValidation')->default(false);
-            $table->date('requiresValidationDate')->nullable();
+            $table->boolean('is_validated')->default(false);
+            $table->date('validation_date')->nullable();
+            $table->boolean('requires_validation')->default(false);
+            $table->date('requires_validation_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

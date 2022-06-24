@@ -49,7 +49,7 @@ class ConstatationLocalizationController extends Controller
 
         // $localization = Localization::create($request->all());
 
-        $constatation->localization()->update($request->all());
+        $constatation->localization()->update($validated);
         
         return $constatation->localization()->get()->toJson();
     }

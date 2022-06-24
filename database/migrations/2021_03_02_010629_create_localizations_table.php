@@ -20,8 +20,8 @@ class CreateLocalizationsTable extends Migration
             $table->json('address_components')->nullable();
             $table->decimal('altitude', 10, 7)->nullable();
             $table->decimal('altitudeAccuracy', 10, 7)->nullable();
-            $table->string('formatted_address')->nullable();
-            $table->string('given_name')->nullable();
+            $table->string('formatted_address')->default('');
+            $table->string('given_name')->default('');
             $table->decimal('heading', 10, 7)->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();

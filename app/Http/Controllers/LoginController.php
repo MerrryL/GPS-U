@@ -35,8 +35,8 @@ class LoginController extends Controller
         $request->validate([
             'email' => 'required',
             'password' => 'required',
-            'firstName' => 'required',
-            'lastName' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -46,8 +46,8 @@ class LoginController extends Controller
             ]);
         } else {
             $user = User::create([
-                'firstName' => $request->input('firstName'),
-                'lastName' => $request->input('lastName'),
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
             ]);
