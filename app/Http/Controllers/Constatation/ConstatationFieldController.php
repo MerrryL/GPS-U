@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Constatation;
 use App\Http\Controllers\Controller;
 use App\Models\Constatation;
 use App\Models\Field;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 class ConstatationFieldController extends Controller
 {
+    protected $defaultRelationships = array('fields.field_group.observation', 'localization', 'images.media', 'images.image_request', 'observers', 'observations.codex', 'observations.field_groups.fields', 'media');
+
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +57,12 @@ class ConstatationFieldController extends Controller
      */
     public function update(Request $request, Constatation $constatation, Field $field)
     {
-        //
+ $constatation->fields()->updateExistingPivot($field->id, ['value' => $request->input('data')]);
+        // $constatation->fields()->where('id', $field->id)->pivot->value =$request->input('data');
+        // return $field->id;
+        // $constatation->fields()->updateExistingPivot($field->id, ['value' => $request->input('data')]);
+        // $constatation->fields()->updateExistingPivot(1, ['value' => "test"]);
+        return $constatation->load($this->defaultRelationships);
     }
 
     /**

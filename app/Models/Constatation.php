@@ -59,6 +59,6 @@ class Constatation extends Model implements HasMedia
 
     public function fields()
     {
-        return $this->belongsToMany(Field::class)->withPivot('value');
+        return $this->belongsToMany(Field::class, "constatation_field")->withPivot(['value', 'id']);
     }
 }

@@ -22,14 +22,23 @@ class CreateImageRequestsTable extends Migration
         });
 
         DB::table('image_requests')->insert(
-            [[ 
-                'name' => 'Photo principale',
-                'description' => 'Photo d\'illustration principale: Essayez de prendre la situation observée dans son entier.',
-            ],
-            [ 
-                'name' => 'Photo rapprochée',
-                'description' => 'Photo d\'illustration secondaire: Prenez une photographie de la situation mettant en évidence les détails.',
-            ],
+            [
+                [
+                    'name' => 'Photo principale',
+                    'description' => 'Photo d\'illustration principale: Essayez de prendre la situation observée dans son entier.',
+                ],
+                [
+                    'name' => 'Photo rapprochée',
+                    'description' => 'Photo d\'illustration secondaire: Prenez une photographie de la situation mettant en évidence les détails.',
+                ],
+                [
+                    'name' => 'Photo des sacs-poubelle',
+                    'description' => 'Plus précis pour ce cas là.',
+                ],
+                [
+                    'name' => 'Photo des sacs PMC',
+                    'description' => 'Plus précis pour ce cas là.',
+                ],
             ]
         );
     }

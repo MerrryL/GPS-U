@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class PivotTables extends Migration
 {
@@ -38,6 +39,35 @@ class PivotTables extends Migration
             $table->foreignId('image_request_id')->constrained();
         });
 
+
+        DB::table('image_request_observation')->insert(
+            [
+                [
+                    'observation_id' => '1',
+                    'image_request_id' => '1',
+                ],
+                [
+                    'observation_id' => '1',
+                    'image_request_id' => '2',
+                ],
+                [
+                    'observation_id' => '1',
+                    'image_request_id' => '3',
+                ],
+                [
+                    'observation_id' => '2',
+                    'image_request_id' => '1',
+                ],
+                [
+                    'observation_id' => '2',
+                    'image_request_id' => '2',
+                ],
+                [
+                    'observation_id' => '2',
+                    'image_request_id' => '4',
+                ],
+            ]
+        );
     }
 
     /**

@@ -18,6 +18,6 @@ class Field extends Model
 
     public function constatations()
     {
-        return $this->hasMany(Constatation::class);
+        return $this->hasMany(Constatation::class, "constatation_field");
     }
 }

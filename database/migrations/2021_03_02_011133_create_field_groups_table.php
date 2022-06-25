@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 class CreateFieldGroupsTable extends Migration
 {
     /**
@@ -21,6 +21,41 @@ class CreateFieldGroupsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        DB::table('field_groups')->insert(
+            [
+                [
+                    'observation_id' => '1',
+                    'name' => 'Poubelles',
+                    'description' => 'Description des sacs poubelles.',
+                    'created_at' => now(),
+                ],
+                [
+                    'observation_id' => '1',
+                    'name' => 'Responsable des sacs poubelles',
+                    'description' => 'Pour déterminer l\'identité du responsable.',
+                    'created_at' => now(),
+                ],
+                [
+                    'observation_id' => '1',
+                    'name' => 'Environs',
+                    'description' => 'Description des environs',
+                    'created_at' => now(),
+                ],
+                [
+                    'observation_id' => '2',
+                    'name' => 'Sacs PMC',
+                    'description' => 'Description des sacs PMC..',
+                    'created_at' => now(),
+                ],
+                [
+                    'observation_id' => '2',
+                    'name' => 'Responsable des sacs PMC',
+                    'description' => 'Pour déterminer l\'identité du responsable.',
+                    'created_at' => now(),
+                ],
+            ]
+        );
     }
 
     /**

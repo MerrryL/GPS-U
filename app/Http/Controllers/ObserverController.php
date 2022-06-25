@@ -17,7 +17,7 @@ class ObserverController extends Controller
     //TODO:filter results
     public function index()
     {
-        return User::all();
+        return User::where('is_observer', true)->get();
     }
 
     /**
